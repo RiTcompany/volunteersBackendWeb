@@ -41,11 +41,14 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public Long updateDocument(Long id, DocumentUpdateDto updateDto) {
-        Document document = documentRepository.findById(id)
-                .orElseThrow(() -> new DocumentNotFoundException(id.toString()));
-        document = documentMapper.document(document, updateDto);
-        return documentRepository.saveAndFlush(document).getId();
+    public void updateDocument(List<DocumentUpdateDto> updateDtoList) {
+        updateDtoList.forEach(updateDto -> {
+            Long id = updateDto.getId();;
+            Document document = documentRepository.findById(id)
+                    .orElseThrow(() -> new DocumentNotFoundException(id.toString()));
+            document = documentMapper.document(document, updateDto);
+            documentRepository.saveAndFlush(document);
+        });
     }
 
     @Override

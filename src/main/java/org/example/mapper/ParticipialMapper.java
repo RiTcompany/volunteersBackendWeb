@@ -2,9 +2,11 @@ package org.example.mapper;
 
 import lombok.RequiredArgsConstructor;
 import org.example.entities.Event;
+import org.example.entities.Functional;
 import org.example.entities.Volunteer;
 import org.example.enums.EParticipant;
 import org.example.exceptions.CenterNotFoundException;
+import org.example.exceptions.HeadquartersNotFoundException;
 import org.example.pojo.dto.table.CenterParticipantDto;
 import org.example.pojo.dto.table.DistrictParticipantDto;
 import org.example.pojo.dto.table.EventParticipantDto;
@@ -12,7 +14,8 @@ import org.example.pojo.dto.table.LinkDto;
 import org.example.pojo.dto.table.VolunteerDto;
 import org.example.pojo.dto.update.ParticipantUpdateDto;
 import org.example.repositories.CenterRepository;
-import org.example.utils.DateUtil;
+import org.example.repositories.FunctionalRepository;
+import org.example.repositories.HeadquartersRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -20,14 +23,17 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class ParticipialMapper {
+    private final DateMapper dateMapper;
     private final LinkMapper linkMapper;
     private final CenterRepository centerRepository;
+    private final HeadquartersRepository headquartersRepository;
+    private final FunctionalRepository functionalRepository;
 
     public VolunteerDto volunteerDto(Volunteer volunteer) {
         VolunteerDto volunteerDto = new VolunteerDto();
         volunteerDto.setId(volunteer.getVolunteerId());
         volunteerDto.setFullName(volunteer.getFullName());
-        volunteerDto.setBirthday(DateUtil.birthdayWithAge(volunteer.getBirthday()));
+        volunteerDto.setBirthdayDto(dateMapper.birthdayWithAge(volunteer.getBirthday()));
         volunteerDto.setTgLink(volunteer.getTgLink());
         volunteerDto.setVk(volunteer.getVk());
         volunteerDto.setColor(volunteer.getColor().getValue());
@@ -37,6 +43,7 @@ public class ParticipialMapper {
         volunteerDto.setHasInterview(volunteer.isHasInterview());
         volunteerDto.setLevel(volunteer.getLevel());
         volunteerDto.setCenterLink(linkMapper.center(volunteer.getCenter()));
+        volunteerDto.setHeadquartersLink(linkMapper.headquarters(volunteer.getHeadquarters()));
         return volunteerDto;
     }
 
@@ -44,7 +51,7 @@ public class ParticipialMapper {
         DistrictParticipantDto districtParticipantDto = new DistrictParticipantDto();
         districtParticipantDto.setId(volunteer.getVolunteerId());
         districtParticipantDto.setFullName(volunteer.getFullName());
-        districtParticipantDto.setBirthday(DateUtil.birthdayWithAge(volunteer.getBirthday()));
+        districtParticipantDto.setBirthdayDto(dateMapper.birthdayWithAge(volunteer.getBirthday()));
         districtParticipantDto.setTgLink(volunteer.getTgLink());
         districtParticipantDto.setVkLink(volunteer.getVk());
         districtParticipantDto.setColor(volunteer.getColor().getValue());
@@ -52,13 +59,16 @@ public class ParticipialMapper {
         return districtParticipantDto;
     }
 
-    public EventParticipantDto eventParticipantDto(Volunteer volunteer) {
+    public EventParticipantDto eventParticipantDto(Volunteer volunteer, long eventId) {
         EventParticipantDto eventParticipantDto = new EventParticipantDto();
         eventParticipantDto.setId(volunteer.getVolunteerId());
         eventParticipantDto.setFullName(volunteer.getFullName());
-        eventParticipantDto.setBirthday(DateUtil.birthdayWithAge(volunteer.getBirthday()));
+        eventParticipantDto.setBirthdayDto(dateMapper.birthdayWithAge(volunteer.getBirthday()));
         eventParticipantDto.setTgLink(volunteer.getTgLink());
-        eventParticipantDto.setFunctional(EParticipant.VOLUNTEER);
+        eventParticipantDto.setFunctional(
+                functionalRepository.findByEventIdAndParticipialId(eventId, volunteer.getId())
+                        .map(Functional::getName).orElse(null)
+        );
         eventParticipantDto.setTesting(volunteer.isTesting());
         eventParticipantDto.setComment(volunteer.getComment());
         eventParticipantDto.setRank(volunteer.getRank());
@@ -81,8 +91,28 @@ public class ParticipialMapper {
     }
 
     public Volunteer volunteer(Volunteer volunteer, ParticipantUpdateDto updateDto) {
+        if (updateDto.getFullName() != null) {
+            volunteer.setFullName(updateDto.getFullName());
+        }
+
+        if (updateDto.getBirthday() != null) {
+            volunteer.setBirthday(updateDto.getBirthday());
+        }
+
+        if (updateDto.getTgLink() != null) {
+            volunteer.setTgLink(updateDto.getTgLink());
+        }
+
+        if (updateDto.getVkLink() != null) {
+            volunteer.setVk(updateDto.getVkLink());
+        }
+
         if (updateDto.getColor() != null) {
             volunteer.setColor(updateDto.getColor());
+        }
+
+        if (updateDto.getComment() != null) {
+            volunteer.setComment(updateDto.getComment());
         }
 
         if (updateDto.getHasInterview() != null) {
@@ -96,6 +126,12 @@ public class ParticipialMapper {
         if (updateDto.getCenterId() != null) {
             volunteer.setCenter(centerRepository.findById(updateDto.getCenterId())
                     .orElseThrow(() -> new CenterNotFoundException(updateDto.getCenterId().toString()))
+            );
+        }
+
+        if (updateDto.getHeadquartersId() != null) {
+            volunteer.setHeadquarters(headquartersRepository.findById(updateDto.getHeadquartersId())
+                    .orElseThrow(() -> new HeadquartersNotFoundException(updateDto.getHeadquartersId().toString()))
             );
         }
 

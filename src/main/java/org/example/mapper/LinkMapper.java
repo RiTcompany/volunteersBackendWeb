@@ -2,6 +2,7 @@ package org.example.mapper;
 
 import org.example.entities.Center;
 import org.example.entities.Event;
+import org.example.entities.Headquarters;
 import org.example.pojo.dto.table.LinkDto;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +12,13 @@ public class LinkMapper {
         LinkDto linkDto = new LinkDto();
         linkDto.setId(center.getId());
         linkDto.setName(center.getName());
+        return linkDto;
+    }
+
+    public LinkDto headquarters(Headquarters headquarters) {
+        LinkDto linkDto = new LinkDto();
+        linkDto.setId(headquarters.getId());
+        linkDto.setName(headquarters.getName());
         return linkDto;
     }
 

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.pojo.dto.table.EventDto;
 import org.example.pojo.dto.update.EventUpdateDto;
 import org.example.services.EventService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,9 +36,10 @@ public class EventController {
         return ResponseEntity.ok(eventService.addEvent(eventDto));
     }
 
-    @PatchMapping("/event/{id}")
-    public ResponseEntity<Long> updateEvent(@PathVariable Long id, @RequestBody EventUpdateDto updateDto) {
-        return ResponseEntity.ok(eventService.updateEvent(id, updateDto));
+    @PatchMapping("/event")
+    public HttpStatus updateEvent(@RequestBody List<EventUpdateDto> updateDtoList) {
+        eventService.updateEvent(updateDtoList);
+        return HttpStatus.ACCEPTED;
     }
 
     @DeleteMapping("/event/{id}")

@@ -29,6 +29,22 @@ public class EventMapper {
     }
 
     public Event event(Event event, EventUpdateDto updateDto) {
+        if (updateDto.getName() != null) {
+            event.setName(updateDto.getName());
+        }
+
+        if (updateDto.getStartTime() != null) {
+            event.setStartTime(updateDto.getStartTime());
+        }
+
+        if (updateDto.getEndTime() != null) {
+            event.setEndTime(updateDto.getEndTime());
+        }
+
+        if (updateDto.getLocation() != null) {
+            event.setLocation(updateDto.getLocation());
+        }
+
         if (updateDto.getTeamLeader() != null) {
             event.setTeamLeader(updateDto.getTeamLeader());
         }

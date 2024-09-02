@@ -48,11 +48,14 @@ public class ParticipantServiceImpl implements ParticipantService {
     }
 
     @Override
-    public Long updateParticipant(Long id, ParticipantUpdateDto updateDto) throws VolunteerNotFoundException {
-        Volunteer volunteer = volunteerRepository.findById(id)
-                .orElseThrow(() -> new VolunteerNotFoundException(id.toString()));
-        volunteer = participialMapper.volunteer(volunteer, updateDto);
-        return volunteerRepository.saveAndFlush(volunteer).getId();
+    public void updateParticipant(List<ParticipantUpdateDto> updateDtoList) throws VolunteerNotFoundException {
+        updateDtoList.forEach(updateDto -> {
+            Long id = updateDto.getId();
+            Volunteer volunteer = volunteerRepository.findById(id)
+                    .orElseThrow(() -> new VolunteerNotFoundException(id.toString()));
+            volunteer = participialMapper.volunteer(volunteer, updateDto);
+            volunteerRepository.saveAndFlush(volunteer);
+        });
     }
 
     @Override
@@ -90,7 +93,8 @@ public class ParticipantServiceImpl implements ParticipantService {
         stream = sortByRank(stream, filter);
         stream = sortByDate(stream, filter);
 
-        return stream.map(participialMapper::eventParticipantDto).toList();
+        return stream.map(volunteer -> participialMapper.eventParticipantDto(volunteer, eventId))
+                .toList();
     }
 
     @Override

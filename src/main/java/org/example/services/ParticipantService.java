@@ -14,7 +14,7 @@ import java.util.List;
 public interface ParticipantService {
     List<VolunteerDto> getVolunteerList(ParticipantFilter filter);
 
-    Long updateParticipant(Long volunteerId, ParticipantUpdateDto updateDto);
+    void updateParticipant(List<ParticipantUpdateDto> updateDtoList);
 
     Long deleteVolunteer(Long id);
 

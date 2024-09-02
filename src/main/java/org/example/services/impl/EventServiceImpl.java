@@ -34,11 +34,14 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public Long updateEvent(Long id, EventUpdateDto updateDto) {
-        Event event = eventRepository.findById(id)
-                .orElseThrow(() -> new EventNotFoundException(id.toString()));
-        event = eventMapper.event(event, updateDto);
-        return eventRepository.saveAndFlush(event).getId();
+    public void updateEvent(List<EventUpdateDto> updateDtoList) {
+        updateDtoList.forEach(updateDto -> {
+            Long id = updateDto.getId();
+            Event event = eventRepository.findById(id)
+                    .orElseThrow(() -> new EventNotFoundException(id.toString()));
+            event = eventMapper.event(event, updateDto);
+            eventRepository.saveAndFlush(event);
+        });
     }
 
     @Override

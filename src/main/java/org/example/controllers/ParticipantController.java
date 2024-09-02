@@ -8,6 +8,7 @@ import org.example.pojo.dto.table.VolunteerDto;
 import org.example.pojo.dto.update.ParticipantUpdateDto;
 import org.example.pojo.filters.ParticipantFilter;
 import org.example.services.ParticipantService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -28,11 +29,12 @@ public class ParticipantController {
         return ResponseEntity.ok(participantService.getVolunteerList(filter));
     }
 
-    @PatchMapping("/volunteer/{id}")
-    public ResponseEntity<Long> updateVolunteer(
-            @PathVariable Long id, @RequestBody ParticipantUpdateDto updateDto
+    @PatchMapping("/volunteer")
+    public HttpStatus updateVolunteer(
+            @RequestBody List<ParticipantUpdateDto> updateDtoList
     ) {
-        return ResponseEntity.ok(participantService.updateParticipant(id, updateDto));
+        participantService.updateParticipant(updateDtoList);
+        return HttpStatus.ACCEPTED;
     }
 
     @DeleteMapping("/volunteer/{id}")
