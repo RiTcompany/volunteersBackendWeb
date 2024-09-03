@@ -13,7 +13,7 @@ public interface DocumentService {
 
     List<DocumentDto> getDistrictTeamDocumentList(Long districtTeamId, DocumentFilter filter);
 
-    Long updateDocument(Long id, DocumentUpdateDto updateDto);
+    void updateDocument(List<DocumentUpdateDto> updateDtoList);
 
     Long addDocument(DocumentDto documentDto);
 }

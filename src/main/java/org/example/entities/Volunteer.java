@@ -117,6 +117,10 @@ public class Volunteer {
     @JoinColumn(name = "center_id")
     private Center center;
 
+    @ManyToOne
+    @JoinColumn(name = "headquarters_id")
+    private Headquarters headquarters;
+
     @Column(name = "district_team_id")
     private Long districtTeamId;
 

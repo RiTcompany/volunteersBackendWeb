@@ -14,7 +14,7 @@ public interface EventService {
 
     Long addEvent(EventDto eventDto);
 
-    Long updateEvent(Long id, EventUpdateDto updateDto);
+    void updateEvent(List<EventUpdateDto> updateDtoList);
 
     Long deleteEvent(Long id);
 }

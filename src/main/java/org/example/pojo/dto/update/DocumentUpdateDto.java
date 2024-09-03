@@ -6,5 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class DocumentUpdateDto {
+    private Long id;
     private Boolean approvalControl;
 }

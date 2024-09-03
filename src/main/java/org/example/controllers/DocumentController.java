@@ -5,6 +5,7 @@ import org.example.pojo.dto.table.DocumentDto;
 import org.example.pojo.dto.update.DocumentUpdateDto;
 import org.example.pojo.filters.DocumentFilter;
 import org.example.services.DocumentService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,12 +34,11 @@ public class DocumentController {
         return ResponseEntity.ok(documentService.getDistrictTeamDocumentList(districtTeamId, filter));
     }
 
-    @PatchMapping("/document/{id}")
-    public ResponseEntity<Long> updateDocument(
-            @PathVariable Long id, @RequestBody DocumentUpdateDto updateDto
-    ) {
-        return ResponseEntity.ok(documentService.updateDocument(id, updateDto));
-    }
+//    @PatchMapping("/document")
+//    public HttpStatus updateDocument(@RequestBody List<DocumentUpdateDto> updateDtoList) {
+//        documentService.updateDocument(updateDtoList);
+//        return HttpStatus.ACCEPTED;
+//    }
 
     @PostMapping("/document")
     public ResponseEntity<Long> addDocument(@RequestBody DocumentDto documentDto) {
