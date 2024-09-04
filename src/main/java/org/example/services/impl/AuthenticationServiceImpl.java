@@ -26,7 +26,7 @@ public class AuthenticationServiceImpl implements org.example.services.Authentic
     public JwtAuthenticationResponse signUp(SignUpRequest request) {
 
         User user = User.builder()
-                .username(request.getUsername())
+                .username(request.getEmail())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request
                 .getPassword())).role(ERole.ROLE_CLIENT)
