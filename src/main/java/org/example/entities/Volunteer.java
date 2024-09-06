@@ -87,7 +87,7 @@ public class Volunteer {
     private String email;
 
     @Column(name = "volunteer_id")
-    private String volunteerId;
+    private Long volunteerId;
 
     @Column(name = "chat_id", nullable = false)
     private Long chatId;

@@ -2,30 +2,60 @@ package org.example.mapper;
 
 import lombok.RequiredArgsConstructor;
 import org.example.entities.Center;
-import org.example.pojo.dto.table.CenterDto;
+import org.example.exceptions.VolunteerNotFoundException;
+import org.example.pojo.dto.card.CenterCardDto;
+import org.example.pojo.dto.create.CenterCreateDto;
+import org.example.pojo.dto.table.CenterTableDto;
 import org.example.repositories.VolunteerRepository;
 import org.springframework.stereotype.Component;
+
+import java.util.Date;
 
 @Component
 @RequiredArgsConstructor
 public class CenterMapper {
     private final VolunteerRepository volunteerRepository;
+    private final LinkMapper linkMapper;
 
-    public CenterDto centerDto(Center center) {
-        CenterDto centerDto = new CenterDto();
-        centerDto.setId(center.getId());
-        centerDto.setName(center.getName());
-        centerDto.setParticipantCount(volunteerRepository.countAllByCenterId(center.getId()));
-        centerDto.setLocation(center.getLocation());
-        centerDto.setContact(center.getContact());
-        return centerDto;
+    public CenterTableDto centerDto(Center center) {
+        CenterTableDto dto = new CenterTableDto();
+        dto.setId(center.getId());
+        dto.setName(center.getName());
+        dto.setParticipantCount(volunteerRepository.countAllByCenterId(center.getId()));
+        dto.setLocation(center.getLocation());
+        dto.setContact(center.getContact());
+        dto.setTeamLeader(linkMapper.participant(center.getTeamLeader()));
+        return dto;
     }
 
-    public Center center(CenterDto centerDto) {
+    public Center center(CenterCreateDto dto) {
         Center center = new Center();
-        center.setName(centerDto.getName());
-        center.setLocation(centerDto.getLocation());
-        center.setContact(centerDto.getContact());
+        center.setName(dto.getName());
+        center.setLocation(dto.getLocation());
+        center.setContact(dto.getContact());
+        center.setFederalId(dto.getFederalId());
+        center.setRank(dto.getRank());
+        center.setCreateDate(new Date());
+        center.setTeamLeader(volunteerRepository.findByVolunteerId(dto.getTeamLeaderVolunteerId()).orElseThrow(() ->
+                new VolunteerNotFoundException(dto.getTeamLeaderVolunteerId().toString())
+        ));
         return center;
+    }
+
+    public CenterCardDto centerCardDto(Center center) {
+        CenterCardDto dto = new CenterCardDto();
+        dto.setFederalId(center.getFederalId());
+        dto.setRank(center.getRank());
+        dto.setCreateDate(center.getCreateDate());
+        dto.setParticipantLinkList(
+                volunteerRepository.findAllByHeadquartersId(center.getId())
+                        .stream().map(linkMapper::participant).toList()
+        );
+//        dto.setTgLinkList();
+//        dto.setVkLinkList();
+//        dto.setEquipmentLinkList();
+        dto.setDocumentLinkList(center.getDocumentList().stream().map(linkMapper::document).toList());
+        dto.setEventLinkList(center.getEventList().stream().map(linkMapper::event).toList());
+        return dto;
     }
 }

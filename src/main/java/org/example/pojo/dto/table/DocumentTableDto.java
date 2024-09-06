@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class DocumentDto {
+public class DocumentTableDto {
     private Long id;
     private String name;
     private String sender;

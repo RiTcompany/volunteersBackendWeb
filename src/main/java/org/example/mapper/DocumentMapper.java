@@ -1,21 +1,22 @@
 package org.example.mapper;
 
 import org.example.entities.Document;
-import org.example.pojo.dto.table.DocumentDto;
+import org.example.pojo.dto.create.DocumentCreateDto;
+import org.example.pojo.dto.table.DocumentTableDto;
 import org.example.pojo.dto.update.DocumentUpdateDto;
 import org.springframework.stereotype.Component;
 
 @Component
 public class DocumentMapper {
-    public DocumentDto documentDto(Document document) {
-        DocumentDto documentDto = new DocumentDto();
-        documentDto.setId(document.getId());
-        documentDto.setName(document.getName());
-        documentDto.setSender(document.getSender());
-        documentDto.setRecipient(document.getRecipient());
-        documentDto.setCreateDate(document.getCreateDate());
-        documentDto.setApprovalControl(document.isApprovalControl());
-        return documentDto;
+    public DocumentTableDto documentDto(Document document) {
+        DocumentTableDto dto = new DocumentTableDto();
+        dto.setId(document.getId());
+        dto.setName(document.getName());
+        dto.setSender(document.getSender());
+        dto.setRecipient(document.getRecipient());
+        dto.setCreateDate(document.getCreateDate());
+        dto.setApprovalControl(document.isApprovalControl());
+        return dto;
     }
 
     public Document document(Document document, DocumentUpdateDto updateDto) {
@@ -26,13 +27,31 @@ public class DocumentMapper {
         return document;
     }
 
-    public Document document(DocumentDto documentDto) {
+    public Document centerDocument(Long id, DocumentCreateDto dto) {
+        Document document = document(dto);
+        document.setCenterId(id);
+        return document;
+    }
+
+    public Document headquartersDocument(Long id, DocumentCreateDto dto) {
+        Document document = document(dto);
+        document.setHeadquartersId(id);
+        return document;
+    }
+
+    public Document districtDocument(Long id, DocumentCreateDto dto) {
+        Document document = document(dto);
+        document.setDistrictTeamId(id);
+        return document;
+    }
+
+    public Document document(DocumentCreateDto dto) {
         Document document = new Document();
-        document.setName(documentDto.getName());
-        document.setSender(documentDto.getSender());
-        document.setRecipient(documentDto.getRecipient());
-        document.setCreateDate(documentDto.getCreateDate());
-        document.setApprovalControl(documentDto.isApprovalControl());
+        document.setName(dto.getName());
+        document.setSender(dto.getSender());
+        document.setRecipient(dto.getRecipient());
+        document.setCreateDate(dto.getCreateDate());
+        document.setApprovalControl(dto.isApprovalControl());
         return document;
     }
 }

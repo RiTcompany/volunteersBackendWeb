@@ -6,10 +6,11 @@ import org.example.entities.Volunteer;
 import org.example.enums.EColor;
 import org.example.exceptions.VolunteerNotFoundException;
 import org.example.mapper.ParticipialMapper;
-import org.example.pojo.dto.table.CenterParticipantDto;
-import org.example.pojo.dto.table.DistrictParticipantDto;
-import org.example.pojo.dto.table.EventParticipantDto;
-import org.example.pojo.dto.table.VolunteerDto;
+import org.example.pojo.dto.card.PersonalAccountDto;
+import org.example.pojo.dto.table.CenterParticipantTableDto;
+import org.example.pojo.dto.table.DistrictParticipantTableDto;
+import org.example.pojo.dto.table.EventParticipantTableDto;
+import org.example.pojo.dto.table.VolunteerTableDto;
 import org.example.pojo.dto.update.ParticipantUpdateDto;
 import org.example.pojo.filters.ParticipantFilter;
 import org.example.repositories.VolunteerRepository;
@@ -29,7 +30,7 @@ public class ParticipantServiceImpl implements ParticipantService {
     private final ParticipialMapper participialMapper;
 
     @Override
-    public List<VolunteerDto> getVolunteerList(ParticipantFilter filter) {
+    public List<VolunteerTableDto> getVolunteerList(ParticipantFilter filter) {
         Stream<Volunteer> stream = volunteerRepository.findAll().stream();
 
         stream = filterByMinAge(stream, filter.getMinAge());
@@ -65,7 +66,7 @@ public class ParticipantServiceImpl implements ParticipantService {
     }
 
     @Override
-    public List<DistrictParticipantDto> getDistrictParticipantList(Long districtTeamId, ParticipantFilter filter) {
+    public List<DistrictParticipantTableDto> getDistrictParticipantList(Long districtTeamId, ParticipantFilter filter) {
         Stream<Volunteer> stream = volunteerRepository.findAllByDistrictTeamId(districtTeamId).stream();
 
         stream = filterByMinAge(stream, filter.getMinAge());
@@ -80,7 +81,7 @@ public class ParticipantServiceImpl implements ParticipantService {
     }
 
     @Override
-    public List<EventParticipantDto> getEventParticipantList(Long eventId, ParticipantFilter filter) {
+    public List<EventParticipantTableDto> getEventParticipantList(Long eventId, ParticipantFilter filter) {
         Stream<Volunteer> stream = volunteerRepository.findAll().stream(); // TODO : filter by event
 
         stream = filterByMinAge(stream, filter.getMinAge());
@@ -98,7 +99,7 @@ public class ParticipantServiceImpl implements ParticipantService {
     }
 
     @Override
-    public List<CenterParticipantDto> getCenterParticipantList(Long centerId, ParticipantFilter filter) {
+    public List<CenterParticipantTableDto> getCenterParticipantList(Long centerId, ParticipantFilter filter) {
         Stream<Volunteer> stream = volunteerRepository.findAllByCenterId(centerId).stream();
 
         stream = filterByMinAge(stream, filter.getMinAge());
@@ -114,6 +115,12 @@ public class ParticipantServiceImpl implements ParticipantService {
         stream = sortByDate(stream, filter);
 
         return stream.map(participialMapper::centerParticipantDto).toList();
+    }
+
+    @Override
+    public PersonalAccountDto getPersonalAccount(Long id) {
+        return volunteerRepository.findById(id).map(participialMapper::personalAccountDto)
+                .orElseThrow(() -> new VolunteerNotFoundException(id.toString()));
     }
 
     private Stream<Volunteer> sortByRank(Stream<Volunteer> stream, ParticipantFilter filter) {

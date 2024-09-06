@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -23,10 +24,10 @@ public class Event {
     private String name;
 
     @Column(name = "start_time")
-    private LocalDateTime startTime;
+    private Date startTime;
 
     @Column(name = "end_time")
-    private LocalDateTime endTime;
+    private Date endTime;
 
     private String location;
 
@@ -38,4 +39,25 @@ public class Event {
 
     @Column(name = "center_id")
     private Long centerId;
+
+    @Column(name = "headquarters_id")
+    private Long headquartersId;
+
+    @Column(name = "group_chat_link")
+    private String groupChatLink;
+
+    @Column(name = "setting_participant_link")
+    private String settingParticipantLink;
+
+    @Column(name = "answerable_id")
+    private Long answerableId;
+
+    @Column(name = "registration_link")
+    private String registrationLink;
+
+    @Column(name = "federal_id")
+    private Long federalId;
+
+    @Column(name = "create_date")
+    private Date createDate;
 }

@@ -1,7 +1,9 @@
 package org.example.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.example.pojo.dto.table.EventDto;
+import org.example.pojo.dto.card.EventCardDto;
+import org.example.pojo.dto.create.EventCreateDto;
+import org.example.pojo.dto.table.EventTableDto;
 import org.example.pojo.dto.update.EventUpdateDto;
 import org.example.services.EventService;
 import org.springframework.http.HttpStatus;
@@ -22,18 +24,18 @@ public class EventController {
     private final EventService eventService;
 
     @GetMapping("/event")
-    public ResponseEntity<List<EventDto>> getEventList() {
+    public ResponseEntity<List<EventTableDto>> getEventList() {
         return ResponseEntity.ok(eventService.getEventList());
     }
 
     @GetMapping("/event/{centerId}")
-    public ResponseEntity<List<EventDto>> getCenterEventList(@PathVariable Long centerId) {
+    public ResponseEntity<List<EventTableDto>> getCenterEventList(@PathVariable Long centerId) {
         return ResponseEntity.ok(eventService.getCenterEventList(centerId));
     }
 
     @PostMapping("/event")
-    public ResponseEntity<Long> addEvent(@RequestBody EventDto eventDto) {
-        return ResponseEntity.ok(eventService.addEvent(eventDto));
+    public ResponseEntity<Long> addEvent(@RequestBody EventCreateDto eventCreateDto) {
+        return ResponseEntity.ok(eventService.addEvent(eventCreateDto));
     }
 
     @PatchMapping("/event")
@@ -45,5 +47,10 @@ public class EventController {
     @DeleteMapping("/event/{id}")
     public ResponseEntity<Long> deleteEvent(@PathVariable Long id) {
         return ResponseEntity.ok(eventService.deleteEvent(id));
+    }
+
+    @GetMapping("/event/{id}")
+    public ResponseEntity<EventCardDto> getEventCard(@PathVariable Long id) {
+        return ResponseEntity.ok(eventService.getEventCardDto(id));
     }
 }

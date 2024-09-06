@@ -1,7 +1,9 @@
 package org.example.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.example.pojo.dto.table.CenterDto;
+import org.example.pojo.dto.card.CenterCardDto;
+import org.example.pojo.dto.create.CenterCreateDto;
+import org.example.pojo.dto.table.CenterTableDto;
 import org.example.services.CenterService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,17 +21,22 @@ public class CenterController {
     private final CenterService centerService;
 
     @GetMapping("/center")
-    public ResponseEntity<List<CenterDto>> getCenterList() {
+    public ResponseEntity<List<CenterTableDto>> getCenterList() {
         return ResponseEntity.ok(centerService.getCenterList());
     }
 
     @PostMapping("/center")
-    public ResponseEntity<Long> addCenter(@RequestBody CenterDto centerDto) {
-        return ResponseEntity.ok(centerService.addCenter(centerDto));
+    public ResponseEntity<Long> addCenter(@RequestBody CenterCreateDto centerCreateDto) {
+        return ResponseEntity.ok(centerService.addCenter(centerCreateDto));
     }
 
     @DeleteMapping("/center/{id}")
     public ResponseEntity<Long> deleteCenter(@PathVariable Long id) {
         return ResponseEntity.ok(centerService.deleteCenter(id));
+    }
+
+    @GetMapping("/center/{id}")
+    public ResponseEntity<CenterCardDto> getCenterCard(@PathVariable Long id) {
+        return ResponseEntity.ok(centerService.getCenterCard(id));
     }
 }

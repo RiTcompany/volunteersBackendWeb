@@ -2,16 +2,15 @@ package org.example.pojo.dto.table;
 
 import lombok.Getter;
 import lombok.Setter;
-
-import java.time.LocalDateTime;
+import org.example.pojo.dto.LinkDto;
 
 @Getter
 @Setter
-public class EventDto {
+public class HeadquartersTableDto {
     private Long id;
     private String name;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private int participantCount;
     private String location;
-    private String teamLeader;
+    private String contact;
+    private LinkDto teamLeader;
 }

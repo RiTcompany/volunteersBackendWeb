@@ -8,8 +8,8 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class CenterParticipantDto {
-    private String id;
+public class CenterParticipantTableDto {
+    private Long volunteerId;
     private String fullName;
     private Date birthday;
     private String tgLink;

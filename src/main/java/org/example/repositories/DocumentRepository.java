@@ -10,5 +10,7 @@ import java.util.List;
 public interface DocumentRepository extends JpaRepository<Document, Long> {
     List<Document> findAllByCenterId(long centerId);
 
+    List<Document> findAllByHeadquartersId(long headquartersId);
+
     List<Document> findAllByDistrictTeamId(long districtTeamId);
 }

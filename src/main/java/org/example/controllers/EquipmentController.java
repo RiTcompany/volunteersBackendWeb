@@ -1,7 +1,7 @@
 package org.example.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.example.pojo.dto.table.EquipmentDto;
+import org.example.pojo.dto.table.EquipmentTableDto;
 import org.example.pojo.filters.EquipmentFilter;
 import org.example.services.EquipmentService;
 import org.springframework.http.ResponseEntity;
@@ -19,13 +19,13 @@ public class EquipmentController {
     private final EquipmentService equipmentService;
 
     @PostMapping("/all_equipment")
-    public ResponseEntity<List<EquipmentDto>> getEquipmentList(@RequestBody EquipmentFilter filter) {
+    public ResponseEntity<List<EquipmentTableDto>> getEquipmentList(@RequestBody EquipmentFilter filter) {
         return ResponseEntity.ok(equipmentService.getEquipmentList(filter));
     }
 
     @PostMapping("/equipment")
-    public ResponseEntity<Long> addEquipment(@RequestBody EquipmentDto equipmentDto) {
-        return ResponseEntity.ok(equipmentService.addEquipment(equipmentDto));
+    public ResponseEntity<Long> addEquipment(@RequestBody EquipmentTableDto equipmentTableDto) {
+        return ResponseEntity.ok(equipmentService.addEquipment(equipmentTableDto));
     }
 
     @DeleteMapping("/equipment/{id}")

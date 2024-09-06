@@ -9,9 +9,9 @@ import java.util.Date;
 @Component
 public class DateMapper {
     public BirthdayDto birthdayWithAge(Date birthdayDate) {
-        BirthdayDto birthdayDto = new BirthdayDto();
-        birthdayDto.setBirthday(birthdayDate);
-        birthdayDto.setAge(DateUtil.age(birthdayDate));
-        return birthdayDto;
+        BirthdayDto dto = new BirthdayDto();
+        dto.setBirthday(birthdayDate);
+        dto.setAge(DateUtil.age(birthdayDate));
+        return dto;
     }
 }

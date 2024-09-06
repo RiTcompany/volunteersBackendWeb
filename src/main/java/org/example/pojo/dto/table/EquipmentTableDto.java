@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class EquipmentDto {
+public class EquipmentTableDto {
     private Long id;
     private Long equipmentId;
     private String type;

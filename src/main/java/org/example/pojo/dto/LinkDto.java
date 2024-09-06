@@ -1,4 +1,4 @@
-package org.example.pojo.dto.table;
+package org.example.pojo.dto;
 
 import lombok.Getter;
 import lombok.Setter;

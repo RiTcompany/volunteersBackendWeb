@@ -4,7 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.example.entities.Document;
 import org.example.exceptions.DocumentNotFoundException;
 import org.example.mapper.DocumentMapper;
-import org.example.pojo.dto.table.DocumentDto;
+import org.example.pojo.dto.create.DocumentCreateDto;
+import org.example.pojo.dto.table.DocumentTableDto;
 import org.example.pojo.dto.update.DocumentUpdateDto;
 import org.example.pojo.filters.DocumentFilter;
 import org.example.repositories.DocumentRepository;
@@ -23,7 +24,7 @@ public class DocumentServiceImpl implements DocumentService {
     private final DocumentMapper documentMapper;
 
     @Override
-    public List<DocumentDto> getCenterDocumentList(Long centerId, DocumentFilter filter) {
+    public List<DocumentTableDto> getCenterDocumentList(Long centerId, DocumentFilter filter) {
         Stream<Document> stream = documentRepository.findAllByCenterId(centerId).stream();
         stream = sortedStream(
                 filterStream(stream, filter), filter
@@ -32,8 +33,17 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public List<DocumentDto> getDistrictTeamDocumentList(Long districtTeamId, DocumentFilter filter) {
-        Stream<Document> stream = documentRepository.findAllByCenterId(districtTeamId).stream();
+    public List<DocumentTableDto> getHeadquartersDocumentList(Long headquartersId, DocumentFilter filter) {
+        Stream<Document> stream = documentRepository.findAllByHeadquartersId(headquartersId).stream();
+        stream = sortedStream(
+                filterStream(stream, filter), filter
+        );
+        return stream.map(documentMapper::documentDto).toList();
+    }
+
+    @Override
+    public List<DocumentTableDto> getDistrictTeamDocumentList(Long districtTeamId, DocumentFilter filter) {
+        Stream<Document> stream = documentRepository.findAllByDistrictTeamId(districtTeamId).stream();
         stream = sortedStream(
                 filterStream(stream, filter), filter
         );
@@ -52,8 +62,18 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public Long addDocument(DocumentDto documentDto) {
-        return documentRepository.saveAndFlush(documentMapper.document(documentDto)).getId();
+    public Long addCenterDocument(Long id, DocumentCreateDto documentCreateDto) {
+        return documentRepository.saveAndFlush(documentMapper.centerDocument(id, documentCreateDto)).getId();
+    }
+
+    @Override
+    public Long addHeadquartersDocument(Long id, DocumentCreateDto documentCreateDto) {
+        return documentRepository.saveAndFlush(documentMapper.headquartersDocument(id, documentCreateDto)).getId();
+    }
+
+    @Override
+    public Long addDistrictDocument(Long id, DocumentCreateDto documentCreateDto) {
+        return documentRepository.saveAndFlush(documentMapper.districtDocument(id, documentCreateDto)).getId();
     }
 
     private Stream<Document> filterStream(Stream<Document> stream, DocumentFilter filter) {

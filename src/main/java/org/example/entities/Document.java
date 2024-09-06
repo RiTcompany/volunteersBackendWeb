@@ -35,6 +35,9 @@ public class Document {
     @Column(name = "center_id")
     private Long centerId;
 
+    @Column(name = "headquarters_id")
+    private Long headquartersId;
+
     @Column(name = "district_team_id")
     private Long districtTeamId;
 

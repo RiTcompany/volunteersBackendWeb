@@ -3,7 +3,7 @@ package org.example.services.impl;
 import lombok.RequiredArgsConstructor;
 import org.example.entities.Equipment;
 import org.example.mapper.EquipmentMapper;
-import org.example.pojo.dto.table.EquipmentDto;
+import org.example.pojo.dto.table.EquipmentTableDto;
 import org.example.pojo.filters.EquipmentFilter;
 import org.example.repositories.EquipmentRepository;
 import org.example.services.EquipmentService;
@@ -20,15 +20,15 @@ public class EquipmentServiceImpl implements EquipmentService {
 
 
     @Override
-    public List<EquipmentDto> getEquipmentList(EquipmentFilter filter) {
+    public List<EquipmentTableDto> getEquipmentList(EquipmentFilter filter) {
         Stream<Equipment> stream = equipmentRepository.findAll().stream();
         stream = filterByType(stream, filter.getTypeList());
         return stream.map(equipmentMapper::equipmentDto).toList();
     }
 
     @Override
-    public long addEquipment(EquipmentDto equipmentDto) {
-        return equipmentRepository.saveAndFlush(equipmentMapper.equipment(equipmentDto)).getId();
+    public long addEquipment(EquipmentTableDto equipmentTableDto) {
+        return equipmentRepository.saveAndFlush(equipmentMapper.equipment(equipmentTableDto)).getId();
     }
 
     @Override
