@@ -6,6 +6,7 @@ import org.example.exceptions.VolunteerNotFoundException;
 import org.example.pojo.dto.card.CenterCardDto;
 import org.example.pojo.dto.create.CenterCreateDto;
 import org.example.pojo.dto.table.CenterTableDto;
+import org.example.pojo.dto.update.CenterUpdateDto;
 import org.example.repositories.VolunteerRepository;
 import org.springframework.stereotype.Component;
 
@@ -57,5 +58,21 @@ public class CenterMapper {
         dto.setDocumentLinkList(center.getDocumentList().stream().map(linkMapper::document).toList());
         dto.setEventLinkList(center.getEventList().stream().map(linkMapper::event).toList());
         return dto;
+    }
+
+    public Center center(Center center, CenterUpdateDto dto) {
+        if (dto.getName() != null) {
+            center.setName(dto.getName());
+        }
+
+        if (dto.getContact() != null) {
+            center.setContact(dto.getContact());
+        }
+
+        if (dto.getLocation() != null) {
+            center.setLocation(dto.getLocation());
+        }
+
+        return center;
     }
 }

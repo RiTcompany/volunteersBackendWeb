@@ -114,11 +114,11 @@ public class Volunteer {
     private boolean hasInterview;
 
     @ManyToOne
-    @JoinColumn(name = "center_id")
+    @JoinColumn(name = "center_id", nullable = true)
     private Center center;
 
     @ManyToOne
-    @JoinColumn(name = "headquarters_id")
+    @JoinColumn(name = "headquarters_id", nullable = true)
     private Headquarters headquarters;
 
     @Column(name = "district_team_id")

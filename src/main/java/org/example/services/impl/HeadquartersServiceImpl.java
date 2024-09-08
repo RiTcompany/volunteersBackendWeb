@@ -1,11 +1,16 @@
 package org.example.services.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.example.entities.Center;
+import org.example.entities.Headquarters;
+import org.example.exceptions.CenterNotFoundException;
 import org.example.exceptions.HeadquartersNotFoundException;
 import org.example.mapper.HeadquartersMapper;
 import org.example.pojo.dto.card.HeadquartersCardDto;
 import org.example.pojo.dto.create.HeadquartersCreateDto;
 import org.example.pojo.dto.table.HeadquartersTableDto;
+import org.example.pojo.dto.update.CenterUpdateDto;
+import org.example.pojo.dto.update.HeadquartersUpdateDto;
 import org.example.repositories.HeadquartersRepository;
 import org.example.services.HeadquartersService;
 import org.springframework.stereotype.Service;
@@ -38,5 +43,11 @@ public class HeadquartersServiceImpl implements HeadquartersService {
     public HeadquartersCardDto getHeadquartersCard(Long id) {
         return headquartersRepository.findById(id).map(headquartersMapper::headquartersCardDto)
                 .orElseThrow(() -> new HeadquartersNotFoundException(id.toString()));
+    }
+
+    @Override
+    public void update(Long id, HeadquartersUpdateDto dto) {
+        Headquarters headquarters = headquartersRepository.findById(id).orElseThrow(() -> new HeadquartersNotFoundException(id.toString()));
+        headquartersRepository.saveAndFlush(headquartersMapper.headquarters(headquarters, dto));
     }
 }

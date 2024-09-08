@@ -1,11 +1,13 @@
 package org.example.services.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.example.entities.Center;
 import org.example.exceptions.CenterNotFoundException;
 import org.example.mapper.CenterMapper;
 import org.example.pojo.dto.card.CenterCardDto;
 import org.example.pojo.dto.create.CenterCreateDto;
 import org.example.pojo.dto.table.CenterTableDto;
+import org.example.pojo.dto.update.CenterUpdateDto;
 import org.example.repositories.CenterRepository;
 import org.example.services.CenterService;
 import org.springframework.stereotype.Service;
@@ -38,5 +40,11 @@ public class CenterServiceImpl implements CenterService {
     public CenterCardDto getCenterCard(Long id) {
         return centerRepository.findById(id).map(centerMapper::centerCardDto)
                 .orElseThrow(() -> new CenterNotFoundException(id.toString()));
+    }
+
+    @Override
+    public void update(Long id, CenterUpdateDto dto) {
+        Center center = centerRepository.findById(id).orElseThrow(() -> new CenterNotFoundException(id.toString()));
+        centerRepository.saveAndFlush(centerMapper.center(center, dto));
     }
 }
