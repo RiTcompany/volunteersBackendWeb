@@ -3,6 +3,7 @@ package org.example.services.impl;
 import lombok.RequiredArgsConstructor;
 import org.example.entities.Equipment;
 import org.example.mapper.EquipmentMapper;
+import org.example.pojo.dto.create.EquipmentCreateDto;
 import org.example.pojo.dto.table.EquipmentTableDto;
 import org.example.pojo.filters.EquipmentFilter;
 import org.example.repositories.EquipmentRepository;
@@ -27,8 +28,8 @@ public class EquipmentServiceImpl implements EquipmentService {
     }
 
     @Override
-    public long addEquipment(EquipmentTableDto equipmentTableDto) {
-        return equipmentRepository.saveAndFlush(equipmentMapper.equipment(equipmentTableDto)).getId();
+    public long addEquipment(EquipmentCreateDto dto) {
+        return equipmentRepository.saveAndFlush(equipmentMapper.equipment(dto)).getId();
     }
 
     @Override

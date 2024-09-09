@@ -44,8 +44,8 @@ public class CenterController {
     }
 
     @PatchMapping("/center/{id}")
-    public HttpStatus updateCenter(@PathVariable Long id, @RequestBody CenterUpdateDto dto) {
-        centerService.update(id, dto);
+    public HttpStatus updateCenter(@PathVariable Long id, @RequestBody List<CenterUpdateDto> dtoLst) {
+        centerService.update(id, dtoLst);
         return HttpStatus.ACCEPTED;
     }
 }

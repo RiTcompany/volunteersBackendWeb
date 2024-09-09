@@ -1,6 +1,7 @@
 package org.example.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.example.pojo.dto.create.EquipmentCreateDto;
 import org.example.pojo.dto.table.EquipmentTableDto;
 import org.example.pojo.filters.EquipmentFilter;
 import org.example.services.EquipmentService;
@@ -24,8 +25,8 @@ public class EquipmentController {
     }
 
     @PostMapping("/equipment")
-    public ResponseEntity<Long> addEquipment(@RequestBody EquipmentTableDto equipmentTableDto) {
-        return ResponseEntity.ok(equipmentService.addEquipment(equipmentTableDto));
+    public ResponseEntity<Long> addEquipment(@RequestBody EquipmentCreateDto dto) {
+        return ResponseEntity.ok(equipmentService.addEquipment(dto));
     }
 
     @DeleteMapping("/equipment/{id}")

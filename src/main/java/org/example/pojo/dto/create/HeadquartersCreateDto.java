@@ -9,7 +9,6 @@ public class HeadquartersCreateDto {
     private Long federalId;
     private Double rank;
     private String name;
-    private Integer participantCount;
     private String location;
     private String contact;
     private Long teamLeaderVolunteerId;

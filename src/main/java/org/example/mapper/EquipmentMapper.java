@@ -1,6 +1,7 @@
 package org.example.mapper;
 
 import org.example.entities.Equipment;
+import org.example.pojo.dto.create.EquipmentCreateDto;
 import org.example.pojo.dto.table.EquipmentTableDto;
 import org.springframework.stereotype.Component;
 
@@ -16,12 +17,11 @@ public class EquipmentMapper {
         return dto;
     }
 
-    public Equipment equipment(EquipmentTableDto dto) {
+    public Equipment equipment(EquipmentCreateDto dto) {
         Equipment equipment = new Equipment();
         equipment.setEquipmentId(dto.getEquipmentId());
         equipment.setType(dto.getType());
         equipment.setYear(dto.getYear());
-        equipment.setCurrentOwner(dto.getCurrentOwner());
         return equipment;
     }
 }

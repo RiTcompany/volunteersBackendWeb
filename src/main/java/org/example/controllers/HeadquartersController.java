@@ -46,8 +46,8 @@ public class HeadquartersController {
     }
 
     @PatchMapping("/headquarters/{id}")
-    public HttpStatus updateCenter(@PathVariable Long id, @RequestBody HeadquartersUpdateDto dto) {
-        headquartersService.update(id, dto);
+    public HttpStatus updateCenter(@PathVariable Long id, @RequestBody List<HeadquartersUpdateDto> dtoList) {
+        headquartersService.update(id, dtoList);
         return HttpStatus.ACCEPTED;
     }
 }
