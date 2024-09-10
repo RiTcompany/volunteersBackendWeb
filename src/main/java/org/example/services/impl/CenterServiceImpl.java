@@ -43,9 +43,9 @@ public class CenterServiceImpl implements CenterService {
     }
 
     @Override
-    public void update(Long id, List<CenterUpdateDto> dtoList) {
+    public void update(List<CenterUpdateDto> dtoList) {
         dtoList.forEach(dto -> {
-                    Center center = centerRepository.findById(id).orElseThrow(() -> new CenterNotFoundException(id.toString()));
+                    Center center = centerRepository.findById(dto.getId()).orElseThrow(() -> new CenterNotFoundException(dto.getId().toString()));
                     centerRepository.saveAndFlush(centerMapper.center(center, dto));
                 }
         );

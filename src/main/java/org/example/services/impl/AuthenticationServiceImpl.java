@@ -29,7 +29,7 @@ public class AuthenticationServiceImpl implements org.example.services.Authentic
                 .username(request.getUsername())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request
-                .getPassword())).role(ERole.ROLE_CLIENT)
+                        .getPassword())).role(ERole.ROLE_CLIENT)
                 .build();
 
         userService.create(user);
@@ -42,14 +42,14 @@ public class AuthenticationServiceImpl implements org.example.services.Authentic
     @Override
     public JwtAuthenticationResponse signIn(SignInRequest request) {
         try {
-                var user = userService
+            var user = userService
                     .userDetailsService()
                     .loadUserByUsername(request.getUsername());
 
             var jwt = jwtService.generateToken(user);
             return new JwtAuthenticationResponse(jwt);
-    } catch (BadCredentialsException e) {
+        } catch (BadCredentialsException e) {
             throw new BadCredentialsException("Bad credentials");
         }
-        }
+    }
 }

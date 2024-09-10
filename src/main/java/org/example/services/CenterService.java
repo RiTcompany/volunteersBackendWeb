@@ -18,5 +18,5 @@ public interface CenterService {
 
     CenterCardDto getCenterCard(Long id);
 
-    void update(Long id, List<CenterUpdateDto> dto);
+    void update(List<CenterUpdateDto> dto);
 }

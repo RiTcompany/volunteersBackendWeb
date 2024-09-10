@@ -43,9 +43,9 @@ public class CenterController {
         return ResponseEntity.ok(centerService.getCenterCard(id));
     }
 
-    @PatchMapping("/center/{id}")
-    public HttpStatus updateCenter(@PathVariable Long id, @RequestBody List<CenterUpdateDto> dtoLst) {
-        centerService.update(id, dtoLst);
+    @PatchMapping("/center")
+    public HttpStatus updateCenter(@RequestBody List<CenterUpdateDto> dtoLst) {
+        centerService.update(dtoLst);
         return HttpStatus.ACCEPTED;
     }
 }
