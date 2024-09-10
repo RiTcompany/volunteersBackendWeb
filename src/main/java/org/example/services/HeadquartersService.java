@@ -18,5 +18,5 @@ public interface HeadquartersService {
 
     HeadquartersCardDto getHeadquartersCard(Long id);
 
-    void update(Long id, List<HeadquartersUpdateDto> dto);
+    void update(List<HeadquartersUpdateDto> dto);
 }

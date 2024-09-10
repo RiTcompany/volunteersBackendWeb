@@ -46,9 +46,9 @@ public class HeadquartersServiceImpl implements HeadquartersService {
     }
 
     @Override
-    public void update(Long id, List<HeadquartersUpdateDto> dtoList) {
+    public void update(List<HeadquartersUpdateDto> dtoList) {
         dtoList.forEach(dto -> {
-                    Headquarters headquarters = headquartersRepository.findById(id).orElseThrow(() -> new HeadquartersNotFoundException(id.toString()));
+                    Headquarters headquarters = headquartersRepository.findById(dto.getId()).orElseThrow(() -> new HeadquartersNotFoundException(dto.getId().toString()));
                     headquartersRepository.saveAndFlush(headquartersMapper.headquarters(headquarters, dto));
                 }
         );

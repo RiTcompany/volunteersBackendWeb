@@ -45,9 +45,9 @@ public class HeadquartersController {
         return ResponseEntity.ok(headquartersService.getHeadquartersCard(id));
     }
 
-    @PatchMapping("/headquarters/{id}")
-    public HttpStatus updateCenter(@PathVariable Long id, @RequestBody List<HeadquartersUpdateDto> dtoList) {
-        headquartersService.update(id, dtoList);
+    @PatchMapping("/headquarters")
+    public HttpStatus updateCenter(@RequestBody List<HeadquartersUpdateDto> dtoList) {
+        headquartersService.update(dtoList);
         return HttpStatus.ACCEPTED;
     }
 }
