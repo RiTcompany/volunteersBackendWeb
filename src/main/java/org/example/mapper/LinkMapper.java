@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class LinkMapper {
     public LinkDto center(Center center) {
+        if (center == null) return null;
+
         LinkDto linkDto = new LinkDto();
         linkDto.setId(center.getId());
         linkDto.setName(center.getName());
@@ -18,6 +20,8 @@ public class LinkMapper {
     }
 
     public LinkDto headquarters(Headquarters headquarters) {
+        if (headquarters == null) return null;
+
         LinkDto linkDto = new LinkDto();
         linkDto.setId(headquarters.getId());
         linkDto.setName(headquarters.getName());
@@ -25,6 +29,8 @@ public class LinkMapper {
     }
 
     public LinkDto event(Event event) {
+        if (event == null) return null;
+
         LinkDto linkDto = new LinkDto();
         linkDto.setId(event.getId());
         linkDto.setName(event.getName());
@@ -32,6 +38,8 @@ public class LinkMapper {
     }
 
     public LinkDto participant(Volunteer volunteer) {
+        if (volunteer == null) return null;
+
         LinkDto linkDto = new LinkDto();
         linkDto.setId(volunteer.getId());
         linkDto.setName(volunteer.getFullName());
@@ -39,6 +47,8 @@ public class LinkMapper {
     }
 
     public LinkDto document(Document document) {
+        if (document == null) return null;
+
         LinkDto linkDto = new LinkDto();
         linkDto.setId(document.getId());
         linkDto.setName(document.getName());
