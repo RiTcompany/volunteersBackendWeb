@@ -7,6 +7,7 @@ import org.example.pojo.dto.BirthdayDto;
 @Getter
 @Setter
 public class EventParticipantTableDto {
+    private Long id;
     private Long volunteerId;
     private String fullName;
     private BirthdayDto birthdayDto;

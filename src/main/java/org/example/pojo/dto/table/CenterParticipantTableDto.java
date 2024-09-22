@@ -9,6 +9,7 @@ import java.util.Date;
 @Getter
 @Setter
 public class CenterParticipantTableDto {
+    private Long id;
     private Long volunteerId;
     private String fullName;
     private Date birthday;

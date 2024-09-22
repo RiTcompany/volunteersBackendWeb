@@ -10,6 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 public class DistrictParticipantTableDto {
+    private Long id;
     private Long volunteerId;
     private String fullName;
     private BirthdayDto birthdayDto;

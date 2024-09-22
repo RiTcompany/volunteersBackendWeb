@@ -40,6 +40,7 @@ public class ParticipantServiceImpl implements ParticipantService {
         stream = filterByColor(stream, filter.getColorList());
         stream = filterByEvent(stream, filter.getEventIdList());
         stream = filterByLevel(stream, filter.getLevelList());
+        stream = filterByInterview(stream, filter.getHasInterview());
         stream = filterByCenter(stream, filter.getCenterIdList());
 
         stream = sortByRank(stream, filter);

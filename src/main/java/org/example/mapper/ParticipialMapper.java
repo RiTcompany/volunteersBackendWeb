@@ -45,6 +45,7 @@ public class ParticipialMapper {
 
     public VolunteerTableDto volunteerDto(Volunteer volunteer) {
         VolunteerTableDto dto = new VolunteerTableDto();
+        dto.setId(volunteer.getId());
         dto.setVolunteerId(volunteer.getVolunteerId());
         dto.setFullName(volunteer.getFullName());
         dto.setBirthdayDto(dateMapper.birthdayWithAge(volunteer.getBirthday()));
@@ -63,6 +64,7 @@ public class ParticipialMapper {
 
     public DistrictParticipantTableDto districtParticipantDto(Volunteer volunteer) {
         DistrictParticipantTableDto dto = new DistrictParticipantTableDto();
+        dto.setId(volunteer.getId());
         dto.setVolunteerId(volunteer.getVolunteerId());
         dto.setFullName(volunteer.getFullName());
         dto.setBirthdayDto(dateMapper.birthdayWithAge(volunteer.getBirthday()));
@@ -75,6 +77,7 @@ public class ParticipialMapper {
 
     public EventParticipantTableDto eventParticipantDto(Volunteer volunteer, long eventId) {
         EventParticipantTableDto dto = new EventParticipantTableDto();
+        dto.setId(volunteer.getId());
         dto.setVolunteerId(volunteer.getVolunteerId());
         dto.setFullName(volunteer.getFullName());
         dto.setBirthdayDto(dateMapper.birthdayWithAge(volunteer.getBirthday()));
@@ -92,6 +95,7 @@ public class ParticipialMapper {
 
     public CenterParticipantTableDto centerParticipantDto(Volunteer volunteer) {
         CenterParticipantTableDto dto = new CenterParticipantTableDto();
+        dto.setId(volunteer.getId());
         dto.setVolunteerId(volunteer.getVolunteerId());
         dto.setFullName(volunteer.getFullName());
         dto.setBirthday(volunteer.getBirthday());
