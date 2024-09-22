@@ -2,10 +2,7 @@ package org.example.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.example.pojo.dto.card.PersonalAccountDto;
-import org.example.pojo.dto.table.CenterParticipantTableDto;
-import org.example.pojo.dto.table.DistrictParticipantTableDto;
-import org.example.pojo.dto.table.EventParticipantTableDto;
-import org.example.pojo.dto.table.VolunteerTableDto;
+import org.example.pojo.dto.table.*;
 import org.example.pojo.dto.update.ParticipantUpdateDto;
 import org.example.pojo.filters.ParticipantFilter;
 import org.example.services.ParticipantService;
@@ -49,6 +46,13 @@ public class ParticipantController {
             @PathVariable Long centerId, @RequestBody ParticipantFilter filter
     ) {
         return ResponseEntity.ok(participantService.getCenterParticipantList(centerId, filter));
+    }
+
+    @PostMapping("/headquarters_participant/{headquartersId}")
+    public ResponseEntity<List<HeadquartersParticipantTableDto>> getHeadquartersParticipantList(
+            @PathVariable Long headquartersId, @RequestBody ParticipantFilter filter
+    ) {
+        return ResponseEntity.ok(participantService.getHeadquartersParticipantList(headquartersId, filter));
     }
 
     @PostMapping("/event_participant/{eventId}")

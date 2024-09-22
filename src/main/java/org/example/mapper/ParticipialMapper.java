@@ -7,11 +7,8 @@ import org.example.entities.Volunteer;
 import org.example.exceptions.CenterNotFoundException;
 import org.example.exceptions.HeadquartersNotFoundException;
 import org.example.pojo.dto.card.PersonalAccountDto;
-import org.example.pojo.dto.table.CenterParticipantTableDto;
-import org.example.pojo.dto.table.DistrictParticipantTableDto;
-import org.example.pojo.dto.table.EventParticipantTableDto;
+import org.example.pojo.dto.table.*;
 import org.example.pojo.dto.LinkDto;
-import org.example.pojo.dto.table.VolunteerTableDto;
 import org.example.pojo.dto.update.ParticipantUpdateDto;
 import org.example.repositories.CenterRepository;
 import org.example.repositories.FunctionalRepository;
@@ -95,6 +92,21 @@ public class ParticipialMapper {
 
     public CenterParticipantTableDto centerParticipantDto(Volunteer volunteer) {
         CenterParticipantTableDto dto = new CenterParticipantTableDto();
+        dto.setId(volunteer.getId());
+        dto.setVolunteerId(volunteer.getVolunteerId());
+        dto.setFullName(volunteer.getFullName());
+        dto.setBirthday(volunteer.getBirthday());
+        dto.setTgLink(volunteer.getTgLink());
+        dto.setVkLink(volunteer.getVk());
+        dto.setColor(volunteer.getColor());
+        dto.setRank(volunteer.getRank());
+        dto.setInterview(volunteer.isHasInterview());
+        dto.setLevel(volunteer.getLevel());
+        return dto;
+    }
+
+    public HeadquartersParticipantTableDto headquartersParticipantDto(Volunteer volunteer) {
+        HeadquartersParticipantTableDto dto = new HeadquartersParticipantTableDto();
         dto.setId(volunteer.getId());
         dto.setVolunteerId(volunteer.getVolunteerId());
         dto.setFullName(volunteer.getFullName());

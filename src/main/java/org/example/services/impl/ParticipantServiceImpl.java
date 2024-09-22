@@ -7,10 +7,7 @@ import org.example.enums.EColor;
 import org.example.exceptions.VolunteerNotFoundException;
 import org.example.mapper.ParticipialMapper;
 import org.example.pojo.dto.card.PersonalAccountDto;
-import org.example.pojo.dto.table.CenterParticipantTableDto;
-import org.example.pojo.dto.table.DistrictParticipantTableDto;
-import org.example.pojo.dto.table.EventParticipantTableDto;
-import org.example.pojo.dto.table.VolunteerTableDto;
+import org.example.pojo.dto.table.*;
 import org.example.pojo.dto.update.ParticipantUpdateDto;
 import org.example.pojo.filters.ParticipantFilter;
 import org.example.repositories.VolunteerRepository;
@@ -116,6 +113,25 @@ public class ParticipantServiceImpl implements ParticipantService {
         stream = sortByDate(stream, filter);
 
         return stream.map(participialMapper::centerParticipantDto).toList();
+    }
+
+    @Override
+    public List<HeadquartersParticipantTableDto> getHeadquartersParticipantList(Long headquartersId, ParticipantFilter filter) {
+        Stream<Volunteer> stream = volunteerRepository.findAllByHeadquartersId(headquartersId).stream();
+
+        stream = filterByMinAge(stream, filter.getMinAge());
+        stream = filterByMaxAge(stream, filter.getMaxAge());
+        stream = filterByMinRank(stream, filter.getMinRank());
+        stream = filterByInterview(stream, filter.getHasInterview());
+        stream = filterByLevel(stream, filter.getLevelList());
+
+        stream = filterByColor(stream, filter.getColorList());
+        stream = filterByEvent(stream, filter.getEventIdList());
+
+        stream = sortByRank(stream, filter);
+        stream = sortByDate(stream, filter);
+
+        return stream.map(participialMapper::headquartersParticipantDto).toList();
     }
 
     @Override
