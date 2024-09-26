@@ -31,6 +31,11 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    public List<EventTableDto> getHeadquartersEventList(Long headquartersId) {
+        return eventRepository.findAllByHeadquartersId(headquartersId).stream().map(eventMapper::eventDto).toList();
+    }
+
+    @Override
     public Long addEvent(EventCreateDto eventCreateDto) {
         return eventRepository.saveAndFlush(eventMapper.event(eventCreateDto)).getId();
     }

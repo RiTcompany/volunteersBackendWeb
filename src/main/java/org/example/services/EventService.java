@@ -14,6 +14,8 @@ public interface EventService {
 
     List<EventTableDto> getCenterEventList(Long centerId);
 
+    List<EventTableDto> getHeadquartersEventList(Long headquartersId);
+
     Long addEvent(EventCreateDto eventCreateDto);
 
     void updateEvent(List<EventUpdateDto> updateDtoList);

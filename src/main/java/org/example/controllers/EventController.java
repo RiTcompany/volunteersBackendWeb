@@ -33,6 +33,11 @@ public class EventController {
         return ResponseEntity.ok(eventService.getCenterEventList(centerId));
     }
 
+    @GetMapping("/event/{headquartersId}")
+    public ResponseEntity<List<EventTableDto>> getHeadquartersIdEventList(@PathVariable Long headquartersId) {
+        return ResponseEntity.ok(eventService.getHeadquartersEventList(headquartersId));
+    }
+
     @PostMapping("/event")
     public ResponseEntity<Long> addEvent(@RequestBody EventCreateDto eventCreateDto) {
         return ResponseEntity.ok(eventService.addEvent(eventCreateDto));

@@ -25,4 +25,5 @@ public class ParticipantFilter {
     private Boolean testing;
     private Boolean hasClothes;
     private List<Long> centerIdList;
+    private List<Long> headquartersIdList;
 }

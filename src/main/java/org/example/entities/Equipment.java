@@ -28,5 +28,11 @@ public class Equipment {
     @Column(name = "current_owner")
     private String currentOwner;
 
+    @Column(name = "center_id")
+    private Long centerId;
+
+    @Column(name = "headquarters_id")
+    private Long headquartersId;
+
 //    TODO : add owner history
 }

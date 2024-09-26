@@ -11,7 +11,11 @@ import java.util.List;
 public interface EquipmentService {
     List<EquipmentTableDto> getEquipmentList(EquipmentFilter filter);
 
-    long addEquipment(EquipmentCreateDto equipmentTableDto);
+    long addCenterEquipment(long centerId, EquipmentCreateDto equipmentTableDto);
+
+    long addHeadquartersEquipment(long headquartersId, EquipmentCreateDto equipmentTableDto);
 
     long deleteEquipment(Long id);
+
+    List<String> getEquipmentypeList();
 }

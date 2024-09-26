@@ -22,20 +22,38 @@ public class EquipmentServiceImpl implements EquipmentService {
 
     @Override
     public List<EquipmentTableDto> getEquipmentList(EquipmentFilter filter) {
-        Stream<Equipment> stream = equipmentRepository.findAll().stream();
+        Stream<Equipment> stream;
+        if (filter.getCenterId() != null) {
+            stream = equipmentRepository.findAllByCenterId(filter.getCenterId()).stream();
+        } else if (filter.getHeadquartersId() != null) {
+            stream = equipmentRepository.findAllByHeadquartersId(filter.getHeadquartersId()).stream();
+        } else {
+            stream = equipmentRepository.findAll().stream();
+        }
+
         stream = filterByType(stream, filter.getTypeList());
         return stream.map(equipmentMapper::equipmentDto).toList();
     }
 
     @Override
-    public long addEquipment(EquipmentCreateDto dto) {
-        return equipmentRepository.saveAndFlush(equipmentMapper.equipment(dto)).getId();
+    public long addCenterEquipment(long centerId, EquipmentCreateDto dto) {
+        return equipmentRepository.saveAndFlush(equipmentMapper.centerEquipment(centerId, dto)).getId();
+    }
+
+    @Override
+    public long addHeadquartersEquipment(long headquartersId, EquipmentCreateDto dto) {
+        return equipmentRepository.saveAndFlush(equipmentMapper.headquartersEquipment(headquartersId, dto)).getId();
     }
 
     @Override
     public long deleteEquipment(Long id) {
         equipmentRepository.deleteById(id);
         return id;
+    }
+
+    @Override
+    public List<String> getEquipmentypeList() {
+        return equipmentRepository.findAllTypes();
     }
 
     private Stream<Equipment> filterByType(Stream<Equipment> stream, List<String> typeList) {

@@ -9,4 +9,6 @@ import java.util.List;
 @Setter
 public class EquipmentFilter {
     private List<String> typeList;
+    private Long headquartersId;
+    private Long centerId;
 }

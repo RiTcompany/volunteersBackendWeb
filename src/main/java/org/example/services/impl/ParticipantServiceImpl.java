@@ -39,6 +39,7 @@ public class ParticipantServiceImpl implements ParticipantService {
         stream = filterByLevel(stream, filter.getLevelList());
         stream = filterByInterview(stream, filter.getHasInterview());
         stream = filterByCenter(stream, filter.getCenterIdList());
+        stream = filterByHeadquarters(stream, filter.getHeadquartersIdList());
 
         stream = sortByRank(stream, filter);
         stream = sortByDate(stream, filter);
@@ -223,6 +224,16 @@ public class ParticipantServiceImpl implements ParticipantService {
         if (centerIdList != null) {
             stream = stream.filter(volunteer ->
                     centerIdList.contains(volunteer.getCenter().getId())
+            );
+        }
+
+        return stream;
+    }
+
+    private Stream<Volunteer> filterByHeadquarters(Stream<Volunteer> stream, List<Long> headquartersIdList) {
+        if (headquartersIdList != null) {
+            stream = stream.filter(volunteer ->
+                    headquartersIdList.contains(volunteer.getHeadquarters().getId())
             );
         }
 

@@ -17,11 +17,21 @@ public class EquipmentMapper {
         return dto;
     }
 
-    public Equipment equipment(EquipmentCreateDto dto) {
+    public Equipment centerEquipment(long centerId, EquipmentCreateDto dto) {
         Equipment equipment = new Equipment();
         equipment.setEquipmentId(dto.getEquipmentId());
         equipment.setType(dto.getType());
         equipment.setYear(dto.getYear());
+        equipment.setCenterId(centerId);
+        return equipment;
+    }
+
+    public Equipment headquartersEquipment(long headquartersId, EquipmentCreateDto dto) {
+        Equipment equipment = new Equipment();
+        equipment.setEquipmentId(dto.getEquipmentId());
+        equipment.setType(dto.getType());
+        equipment.setYear(dto.getYear());
+        equipment.setHeadquartersId(headquartersId);
         return equipment;
     }
 }
