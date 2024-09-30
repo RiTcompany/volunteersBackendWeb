@@ -37,6 +37,7 @@ public class ParticipialMapper {
         dto.setCenterLink(linkMapper.center(volunteer.getCenter()));
         dto.setHeadquartersLink(linkMapper.headquarters(volunteer.getHeadquarters()));
         dto.setEventLinkList(volunteer.getEventList().stream().map(linkMapper::event).toList());
+        dto.setDistrictTeamId(volunteer.getDistrictTeamId());
         return dto;
     }
 
@@ -163,6 +164,18 @@ public class ParticipialMapper {
             volunteer.setHeadquarters(headquartersRepository.findById(updateDto.getHeadquartersId())
                     .orElseThrow(() -> new HeadquartersNotFoundException(updateDto.getHeadquartersId().toString()))
             );
+        }
+
+        if (updateDto.getTesting() != null) {
+            volunteer.setTesting(updateDto.getTesting());
+        }
+
+        if (updateDto.getRank() != null) {
+            volunteer.setRank(updateDto.getRank());
+        }
+
+        if (updateDto.getDistrictTeamId() != null) {
+            volunteer.setDistrictTeamId(updateDto.getDistrictTeamId());
         }
 
         return volunteer;

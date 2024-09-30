@@ -19,4 +19,5 @@ public class PersonalAccountDto {
     private List<LinkDto> eventLinkList;
     private LinkDto centerLink;
     private LinkDto headquartersLink;
+    private Long districtTeamId;
 }

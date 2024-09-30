@@ -20,4 +20,7 @@ public class ParticipantUpdateDto {
     private String level;
     private Long centerId;
     private Long headquartersId;
+    private Boolean testing;
+    private Double rank;
+    private Long districtTeamId;
 }
