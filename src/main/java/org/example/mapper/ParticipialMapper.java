@@ -174,6 +174,10 @@ public class ParticipialMapper {
             volunteer.setRank(updateDto.getRank());
         }
 
+        if (updateDto.getHasClothes() != null) {
+            volunteer.setHasAnorak(updateDto.getHasClothes());
+        }
+
         return volunteer;
     }
 

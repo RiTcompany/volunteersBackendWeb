@@ -22,4 +22,5 @@ public class ParticipantUpdateDto {
     private Long headquartersId;
     private Boolean testing;
     private Double rank;
+    private Boolean hasClothes;
 }
