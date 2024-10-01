@@ -7,5 +7,5 @@ import lombok.Setter;
 @Setter
 public class DistrictTeamParticipantUpdateDto {
     private Long volunteerId;
-    private Long districtTeaId;
+    private Long districtTeamId;
 }
