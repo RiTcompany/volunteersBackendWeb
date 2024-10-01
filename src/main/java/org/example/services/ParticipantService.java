@@ -2,6 +2,7 @@ package org.example.services;
 
 import org.example.pojo.dto.card.PersonalAccountDto;
 import org.example.pojo.dto.table.*;
+import org.example.pojo.dto.update.DistrictTeamParticipantUpdateDto;
 import org.example.pojo.dto.update.ParticipantUpdateDto;
 import org.example.pojo.filters.ParticipantFilter;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,8 @@ public interface ParticipantService {
     List<CenterParticipantTableDto> getCenterParticipantList(Long centerId, ParticipantFilter filter);
 
     List<HeadquartersParticipantTableDto> getHeadquartersParticipantList(Long headquartersId, ParticipantFilter filter);
+
+    void changeDistrictTeamForParticipant(DistrictTeamParticipantUpdateDto dto);
 
     PersonalAccountDto getPersonalAccount(Long id);
 }

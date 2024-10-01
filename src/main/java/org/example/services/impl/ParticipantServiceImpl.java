@@ -1,5 +1,6 @@
 package org.example.services.impl;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.example.entities.Event;
 import org.example.entities.Volunteer;
@@ -8,6 +9,7 @@ import org.example.exceptions.VolunteerNotFoundException;
 import org.example.mapper.ParticipialMapper;
 import org.example.pojo.dto.card.PersonalAccountDto;
 import org.example.pojo.dto.table.*;
+import org.example.pojo.dto.update.DistrictTeamParticipantUpdateDto;
 import org.example.pojo.dto.update.ParticipantUpdateDto;
 import org.example.pojo.filters.ParticipantFilter;
 import org.example.repositories.VolunteerRepository;
@@ -133,6 +135,15 @@ public class ParticipantServiceImpl implements ParticipantService {
         stream = sortByDate(stream, filter);
 
         return stream.map(participialMapper::headquartersParticipantDto).toList();
+    }
+
+    @Override
+    public void changeDistrictTeamForParticipant(DistrictTeamParticipantUpdateDto dto) {
+        Volunteer volunteer = volunteerRepository.findByVolunteerId(dto.getVolunteerId()).orElseThrow(() ->
+                new EntityNotFoundException("Не сущетвует volunteer ID = ".concat(String.valueOf(dto.getVolunteerId())))
+        );
+        volunteer.setDistrictTeamId(dto.getDistrictTeaId());
+        volunteerRepository.saveAndFlush(volunteer);
     }
 
     @Override

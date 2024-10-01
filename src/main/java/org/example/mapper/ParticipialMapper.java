@@ -174,10 +174,6 @@ public class ParticipialMapper {
             volunteer.setRank(updateDto.getRank());
         }
 
-        if (updateDto.getDistrictTeamId() != null) {
-            volunteer.setDistrictTeamId(updateDto.getDistrictTeamId());
-        }
-
         return volunteer;
     }
 

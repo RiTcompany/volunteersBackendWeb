@@ -3,6 +3,7 @@ package org.example.controllers;
 import lombok.RequiredArgsConstructor;
 import org.example.pojo.dto.card.PersonalAccountDto;
 import org.example.pojo.dto.table.*;
+import org.example.pojo.dto.update.DistrictTeamParticipantUpdateDto;
 import org.example.pojo.dto.update.ParticipantUpdateDto;
 import org.example.pojo.filters.ParticipantFilter;
 import org.example.services.ParticipantService;
@@ -67,6 +68,12 @@ public class ParticipantController {
             @PathVariable Long districtTeamId, @RequestBody ParticipantFilter filter
     ) {
         return ResponseEntity.ok(participantService.getDistrictParticipantList(districtTeamId, filter));
+    }
+
+    @PatchMapping("/district_team_participant/change")
+    public HttpStatus getDistrictParticipantList(@RequestBody DistrictTeamParticipantUpdateDto dto) {
+        participantService.changeDistrictTeamForParticipant(dto);
+        return HttpStatus.ACCEPTED;
     }
 
     @GetMapping("/personal_account/{id}")
