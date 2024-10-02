@@ -45,6 +45,7 @@ public class CenterMapper {
 
     public CenterCardDto centerCardDto(Center center) {
         CenterCardDto dto = new CenterCardDto();
+        dto.setName(center.getName());
         dto.setFederalId(center.getFederalId());
         dto.setRank(center.getRank());
         dto.setCreateDate(center.getCreateDate());

@@ -1,7 +1,11 @@
 package org.example.services;
 
 import org.example.pojo.dto.card.PersonalAccountDto;
-import org.example.pojo.dto.table.*;
+import org.example.pojo.dto.table.CenterParticipantTableDto;
+import org.example.pojo.dto.table.DistrictParticipantTableDto;
+import org.example.pojo.dto.table.EventParticipantTableDto;
+import org.example.pojo.dto.table.HeadquartersParticipantTableDto;
+import org.example.pojo.dto.table.VolunteerTableDto;
 import org.example.pojo.dto.update.DistrictTeamParticipantUpdateDto;
 import org.example.pojo.dto.update.ParticipantUpdateDto;
 import org.example.pojo.filters.ParticipantFilter;

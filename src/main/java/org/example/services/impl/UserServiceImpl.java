@@ -20,7 +20,6 @@ public class UserServiceImpl {
     }
 
 
-
     public User create(User user) {
         if (repository.existsByUsername(user.getUsername())) {
             // Заменить на свои исключения

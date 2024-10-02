@@ -2,7 +2,6 @@ package org.example.mapper;
 
 import lombok.RequiredArgsConstructor;
 import org.example.entities.Event;
-import org.example.entities.Volunteer;
 import org.example.exceptions.VolunteerNotFoundException;
 import org.example.pojo.dto.card.EventCardDto;
 import org.example.pojo.dto.create.EventCreateDto;

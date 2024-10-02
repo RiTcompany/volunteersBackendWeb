@@ -53,7 +53,8 @@ public class DocumentServiceImpl implements DocumentService {
     @Override
     public void updateDocument(List<DocumentUpdateDto> updateDtoList) {
         updateDtoList.forEach(updateDto -> {
-            Long id = updateDto.getId();;
+            Long id = updateDto.getId();
+            ;
             Document document = documentRepository.findById(id)
                     .orElseThrow(() -> new DocumentNotFoundException(id.toString()));
             document = documentMapper.document(document, updateDto);

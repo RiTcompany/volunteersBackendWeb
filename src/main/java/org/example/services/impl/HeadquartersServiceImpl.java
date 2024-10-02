@@ -1,15 +1,12 @@
 package org.example.services.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.example.entities.Center;
 import org.example.entities.Headquarters;
-import org.example.exceptions.CenterNotFoundException;
 import org.example.exceptions.HeadquartersNotFoundException;
 import org.example.mapper.HeadquartersMapper;
 import org.example.pojo.dto.card.HeadquartersCardDto;
 import org.example.pojo.dto.create.HeadquartersCreateDto;
 import org.example.pojo.dto.table.HeadquartersTableDto;
-import org.example.pojo.dto.update.CenterUpdateDto;
 import org.example.pojo.dto.update.HeadquartersUpdateDto;
 import org.example.repositories.HeadquartersRepository;
 import org.example.services.HeadquartersService;

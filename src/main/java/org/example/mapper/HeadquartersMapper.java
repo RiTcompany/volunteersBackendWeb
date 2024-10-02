@@ -1,13 +1,11 @@
 package org.example.mapper;
 
 import lombok.RequiredArgsConstructor;
-import org.example.entities.Center;
 import org.example.entities.Headquarters;
 import org.example.exceptions.VolunteerNotFoundException;
 import org.example.pojo.dto.card.HeadquartersCardDto;
 import org.example.pojo.dto.create.HeadquartersCreateDto;
 import org.example.pojo.dto.table.HeadquartersTableDto;
-import org.example.pojo.dto.update.CenterUpdateDto;
 import org.example.pojo.dto.update.HeadquartersUpdateDto;
 import org.example.repositories.VolunteerRepository;
 import org.springframework.stereotype.Component;
@@ -47,6 +45,7 @@ public class HeadquartersMapper {
 
     public HeadquartersCardDto headquartersCardDto(Headquarters headquarters) {
         HeadquartersCardDto dto = new HeadquartersCardDto();
+        dto.setName(headquarters.getName());
         dto.setFederalId(headquarters.getFederalId());
         dto.setRank(headquarters.getRank());
         dto.setCreateDate(headquarters.getCreateDate());

@@ -2,9 +2,7 @@ package org.example.pojo.dto.table;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.example.enums.EColor;
-
-import java.util.Date;
+import org.example.pojo.dto.BirthdayDto;
 
 @Getter
 @Setter
@@ -12,10 +10,10 @@ public class HeadquartersParticipantTableDto {
     private Long id;
     private Long volunteerId;
     private String fullName;
-    private Date birthday;
+    private BirthdayDto birthday;
     private String tgLink;
     private String vkLink;
-    private EColor color;
+    private String color;
     private String comment;
     private double rank;
     private boolean interview;

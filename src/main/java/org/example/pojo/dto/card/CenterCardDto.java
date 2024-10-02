@@ -10,6 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 public class CenterCardDto {
+    private String name;
     private Long federalId;
     private Date createDate;
     private List<String> tgLinkList;
