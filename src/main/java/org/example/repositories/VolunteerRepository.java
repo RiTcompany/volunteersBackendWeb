@@ -1,5 +1,6 @@
 package org.example.repositories;
 
+import org.example.entities.Event;
 import org.example.entities.Volunteer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -14,6 +15,8 @@ public interface VolunteerRepository extends JpaRepository<Volunteer, Long> {
     List<Volunteer> findAllByCenterId(long centerId);
 
     List<Volunteer> findAllByHeadquartersId(long headquartersId);
+
+    List<Volunteer> findAllByEventListContains(Event event);
 
     int countAllByCenterId(long centerId);
 

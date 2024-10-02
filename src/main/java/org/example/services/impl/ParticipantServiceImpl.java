@@ -12,6 +12,7 @@ import org.example.pojo.dto.table.*;
 import org.example.pojo.dto.update.DistrictTeamParticipantUpdateDto;
 import org.example.pojo.dto.update.ParticipantUpdateDto;
 import org.example.pojo.filters.ParticipantFilter;
+import org.example.repositories.EventRepository;
 import org.example.repositories.VolunteerRepository;
 import org.example.services.ParticipantService;
 import org.example.utils.DateUtil;
@@ -27,6 +28,7 @@ import java.util.stream.Stream;
 public class ParticipantServiceImpl implements ParticipantService {
     private final VolunteerRepository volunteerRepository;
     private final ParticipialMapper participialMapper;
+    private final EventRepository eventRepository;
 
     @Override
     public List<VolunteerTableDto> getVolunteerList(ParticipantFilter filter) {
@@ -83,7 +85,10 @@ public class ParticipantServiceImpl implements ParticipantService {
 
     @Override
     public List<EventParticipantTableDto> getEventParticipantList(Long eventId, ParticipantFilter filter) {
-        Stream<Volunteer> stream = volunteerRepository.findAll().stream(); // TODO : filter by event
+        Event event = eventRepository.findById(eventId).orElseThrow(() ->
+                new EntityNotFoundException("Не существует Event ID = ".concat(String.valueOf(eventId)))
+        );
+        Stream<Volunteer> stream = volunteerRepository.findAllByEventListContains(event).stream();
 
         stream = filterByMinAge(stream, filter.getMinAge());
         stream = filterByMaxAge(stream, filter.getMaxAge());
@@ -142,7 +147,7 @@ public class ParticipantServiceImpl implements ParticipantService {
         Volunteer volunteer = volunteerRepository.findByVolunteerId(dto.getVolunteerId()).orElseThrow(() ->
                 new EntityNotFoundException("Не сущетвует volunteer ID = ".concat(String.valueOf(dto.getVolunteerId())))
         );
-        volunteer.setDistrictTeamId(dto.getDistrictTeaId());
+        volunteer.setDistrictTeamId(dto.getDistrictTeamId());
         volunteerRepository.saveAndFlush(volunteer);
     }
 
