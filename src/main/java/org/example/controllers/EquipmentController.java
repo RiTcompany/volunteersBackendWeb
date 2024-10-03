@@ -25,12 +25,12 @@ public class EquipmentController {
         return ResponseEntity.ok(equipmentService.getEquipmentList(filter));
     }
 
-    @PostMapping("/equipment/{centerId}")
+    @PostMapping("/equipment_center/{centerId}")
     public ResponseEntity<Long> addCenterEquipment(@PathVariable Long centerId, @RequestBody EquipmentCreateDto dto) {
         return ResponseEntity.ok(equipmentService.addCenterEquipment(centerId, dto));
     }
 
-    @PostMapping("/equipment/{headquartersId}")
+    @PostMapping("/equipment_headquarters/{headquartersId}")
     public ResponseEntity<Long> addHeadquartersEquipment(@PathVariable Long headquartersId, @RequestBody EquipmentCreateDto dto) {
         return ResponseEntity.ok(equipmentService.addHeadquartersEquipment(headquartersId, dto));
     }
