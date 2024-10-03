@@ -20,5 +20,7 @@ public interface VolunteerRepository extends JpaRepository<Volunteer, Long> {
 
     int countAllByCenterId(long centerId);
 
+    int countAllByHeadquartersId(long headquartersId);
+
     Optional<Volunteer> findByVolunteerId(Long volunteerId);
 }

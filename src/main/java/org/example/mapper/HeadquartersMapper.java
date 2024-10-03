@@ -22,7 +22,7 @@ public class HeadquartersMapper {
         HeadquartersTableDto dto = new HeadquartersTableDto();
         dto.setId(headquarters.getId());
         dto.setName(headquarters.getName());
-        dto.setParticipantCount(volunteerRepository.countAllByCenterId(headquarters.getId()));
+        dto.setParticipantCount(volunteerRepository.countAllByHeadquartersId(headquarters.getId()));
         dto.setLocation(headquarters.getLocation());
         dto.setContact(headquarters.getContact());
         dto.setTeamLeader(linkMapper.participant(headquarters.getTeamLeader()));
