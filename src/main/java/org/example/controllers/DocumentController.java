@@ -5,7 +5,9 @@ import org.example.pojo.dto.create.DocumentCreateDto;
 import org.example.pojo.dto.table.DocumentTableDto;
 import org.example.pojo.filters.DocumentFilter;
 import org.example.services.DocumentService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -58,5 +60,12 @@ public class DocumentController {
     @PostMapping("/add_district_document/{id}")
     public ResponseEntity<Long> addDistrictDocument(@PathVariable Long id, @RequestBody DocumentCreateDto documentCreateDto) {
         return ResponseEntity.ok(documentService.addDistrictDocument(id, documentCreateDto));
+    }
+
+    @DeleteMapping("/document/{id}")
+    public HttpStatus deleteDocument(@PathVariable Long id)
+    {
+        documentService.delete(id);
+        return HttpStatus.ACCEPTED;
     }
 }

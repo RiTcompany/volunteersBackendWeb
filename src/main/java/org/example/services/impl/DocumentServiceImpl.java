@@ -77,6 +77,11 @@ public class DocumentServiceImpl implements DocumentService {
         return documentRepository.saveAndFlush(documentMapper.districtDocument(id, documentCreateDto)).getId();
     }
 
+    @Override
+    public void delete(Long id) {
+        documentRepository.deleteById(id);
+    }
+
     private Stream<Document> filterStream(Stream<Document> stream, DocumentFilter filter) {
         return filterByEndDate(
                 filterByStartDate(

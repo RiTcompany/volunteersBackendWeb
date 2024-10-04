@@ -23,4 +23,6 @@ public interface DocumentService {
     Long addHeadquartersDocument(Long id, DocumentCreateDto documentCreateDto);
 
     Long addDistrictDocument(Long id, DocumentCreateDto documentCreateDto);
+
+    void delete(Long id);
 }
