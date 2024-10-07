@@ -5,7 +5,11 @@ import org.example.pojo.dto.table.DocumentTableDto;
 import org.example.pojo.dto.update.DocumentUpdateDto;
 import org.example.pojo.filters.DocumentFilter;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 @Service
@@ -18,11 +22,13 @@ public interface DocumentService {
 
     void updateDocument(List<DocumentUpdateDto> updateDtoList);
 
-    Long addCenterDocument(Long id, DocumentCreateDto documentCreateDto);
+    Long addCenterDocument(Long id, DocumentCreateDto documentCreateDto, MultipartFile multipartFile) throws IOException;
 
-    Long addHeadquartersDocument(Long id, DocumentCreateDto documentCreateDto);
+    Long addHeadquartersDocument(Long id, DocumentCreateDto documentCreateDto, MultipartFile multipartFile) throws IOException;
 
-    Long addDistrictDocument(Long id, DocumentCreateDto documentCreateDto);
+    Long addDistrictDocument(Long id, DocumentCreateDto documentCreateDto,MultipartFile multipartFile) throws IOException;
 
     void delete(Long id);
+
+    InputStream getFile(Long id) throws FileNotFoundException;
 }

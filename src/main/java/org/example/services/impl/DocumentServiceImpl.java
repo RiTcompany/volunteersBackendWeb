@@ -1,5 +1,6 @@
 package org.example.services.impl;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.example.entities.Document;
 import org.example.exceptions.DocumentNotFoundException;
@@ -10,8 +11,17 @@ import org.example.pojo.dto.update.DocumentUpdateDto;
 import org.example.pojo.filters.DocumentFilter;
 import org.example.repositories.DocumentRepository;
 import org.example.services.DocumentService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -20,6 +30,9 @@ import java.util.stream.Stream;
 @Service
 @RequiredArgsConstructor
 public class DocumentServiceImpl implements DocumentService {
+    @Value("${media.path}")
+    private String PATH_TO_MEDIA;
+
     private final DocumentRepository documentRepository;
     private final DocumentMapper documentMapper;
 
@@ -63,23 +76,43 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public Long addCenterDocument(Long id, DocumentCreateDto documentCreateDto) {
-        return documentRepository.saveAndFlush(documentMapper.centerDocument(id, documentCreateDto)).getId();
+    public Long addCenterDocument(Long id, DocumentCreateDto documentCreateDto, MultipartFile multipartFile) throws IOException {
+        Document document = documentMapper.centerDocument(id, documentCreateDto);
+        return saveFile(multipartFile, document);
     }
 
     @Override
-    public Long addHeadquartersDocument(Long id, DocumentCreateDto documentCreateDto) {
-        return documentRepository.saveAndFlush(documentMapper.headquartersDocument(id, documentCreateDto)).getId();
+    public Long addHeadquartersDocument(Long id, DocumentCreateDto documentCreateDto, MultipartFile multipartFile) throws IOException {
+        Document document = documentMapper.headquartersDocument(id, documentCreateDto);
+        return saveFile(multipartFile, document);
     }
 
     @Override
-    public Long addDistrictDocument(Long id, DocumentCreateDto documentCreateDto) {
-        return documentRepository.saveAndFlush(documentMapper.districtDocument(id, documentCreateDto)).getId();
+    public Long addDistrictDocument(Long id, DocumentCreateDto documentCreateDto, MultipartFile multipartFile) throws IOException {
+        Document document = documentMapper.districtDocument(id, documentCreateDto);
+        return saveFile(multipartFile, document);
     }
 
     @Override
     public void delete(Long id) {
         documentRepository.deleteById(id);
+    }
+
+    @Override
+    public InputStream getFile(Long id) throws FileNotFoundException {
+        Document document = documentRepository.findById(id).orElseThrow(() ->
+                new EntityNotFoundException("Не существует документа ID = ".concat(String.valueOf(id)))
+        );
+        File file = new File(document.getFilePath());
+        return new FileInputStream(file);
+    }
+
+    private Long saveFile(MultipartFile multipartFile, Document document) throws IOException {
+        Files.createDirectories(Paths.get(PATH_TO_MEDIA + "/document/"));
+        File file = new File(PATH_TO_MEDIA + "/document/" + multipartFile.getOriginalFilename());
+        multipartFile.transferTo(file);
+        document.setFilePath(file.getAbsolutePath());
+        return documentRepository.saveAndFlush(document).getId();
     }
 
     private Stream<Document> filterStream(Stream<Document> stream, DocumentFilter filter) {
