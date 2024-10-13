@@ -1,5 +1,9 @@
 package org.example.controllers;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
 import lombok.RequiredArgsConstructor;
 import org.example.pojo.dto.card.PersonalAccountDto;
 import org.example.pojo.dto.table.CenterParticipantTableDto;
@@ -11,16 +15,13 @@ import org.example.pojo.dto.update.DistrictTeamParticipantUpdateDto;
 import org.example.pojo.dto.update.ParticipantUpdateDto;
 import org.example.pojo.filters.ParticipantFilter;
 import org.example.services.ParticipantService;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 @RestController
@@ -84,4 +85,34 @@ public class ParticipantController {
     public ResponseEntity<PersonalAccountDto> getPersonalAccountCard(@PathVariable Long id) {
         return ResponseEntity.ok(participantService.getPersonalAccount(id));
     }
+
+    //TODO: Скрыть логику в соответствующий сервис и перенести эндпоинт в контроллер, если идейно должен лежать не тут
+    @GetMapping("/volunteer/{id}/generateQR")
+    public ResponseEntity<byte[]> generateQRCode(@PathVariable Long id) {
+        try {
+            String url = "http://localhost:8082/volunteer/" + id + "/mark";
+
+            BitMatrix bitMatrix = new MultiFormatWriter().encode(url, BarcodeFormat.QR_CODE, 300, 300);
+
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            MatrixToImageWriter.writeToStream(bitMatrix, "PNG", byteArrayOutputStream);
+
+            return ResponseEntity
+                    .ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"qrcode.png\"")
+                    .contentType(MediaType.IMAGE_PNG)
+                    .body(byteArrayOutputStream.toByteArray());
+
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    //TODO: Добавить логику пометки волонтера присутствующим и позволить переходить по ссылке только роли, которая за это в ответе
+    @GetMapping("/volunteer/{id}/mark")
+    public ResponseEntity<Long> markVolunteerPresence(@PathVariable Long id) {
+        //логика по помечанию волонтера присутствующим
+        return ResponseEntity.ok(id);
+    }
+
 }
