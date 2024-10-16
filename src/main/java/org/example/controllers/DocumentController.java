@@ -79,11 +79,10 @@ public class DocumentController {
 
     @PostMapping("/add_district_document/{id}")
     public ResponseEntity<Long> addDistrictDocument(
-            @RequestParam("file") MultipartFile multipartFile,
             @PathVariable Long id,
             @RequestBody DocumentCreateDto documentCreateDto
     ) throws IOException {
-        return ResponseEntity.ok(documentService.addDistrictDocument(id, documentCreateDto, multipartFile));
+        return ResponseEntity.ok(documentService.addDistrictDocument(id, documentCreateDto));
     }
 
     @DeleteMapping("/document/{id}")

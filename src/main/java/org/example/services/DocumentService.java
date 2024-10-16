@@ -26,7 +26,7 @@ public interface DocumentService {
 
     Long addHeadquartersDocument(Long id, DocumentCreateDto documentCreateDto, MultipartFile multipartFile) throws IOException;
 
-    Long addDistrictDocument(Long id, DocumentCreateDto documentCreateDto,MultipartFile multipartFile) throws IOException;
+    Long addDistrictDocument(Long id, DocumentCreateDto documentCreateDto) throws IOException;
 
     void delete(Long id);
 

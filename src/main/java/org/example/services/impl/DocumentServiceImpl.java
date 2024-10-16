@@ -88,9 +88,9 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public Long addDistrictDocument(Long id, DocumentCreateDto documentCreateDto, MultipartFile multipartFile) throws IOException {
+    public Long addDistrictDocument(Long id, DocumentCreateDto documentCreateDto) throws IOException {
         Document document = documentMapper.districtDocument(id, documentCreateDto);
-        return saveFile(multipartFile, document);
+        return saveFile(documentCreateDto.getMultipartFile(), document);
     }
 
     @Override
