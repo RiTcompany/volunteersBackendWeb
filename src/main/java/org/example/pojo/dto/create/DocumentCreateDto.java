@@ -2,7 +2,6 @@ package org.example.pojo.dto.create;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 
@@ -14,5 +13,4 @@ public class DocumentCreateDto {
     private String recipient;
     private Date createDate;
     private boolean approvalControl;
-    private MultipartFile multipartFile;
 }

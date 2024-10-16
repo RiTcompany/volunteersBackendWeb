@@ -32,7 +32,6 @@ import java.util.stream.Stream;
 public class DocumentServiceImpl implements DocumentService {
     @Value("${media.path}")
     private String PATH_TO_MEDIA;
-
     private final DocumentRepository documentRepository;
     private final DocumentMapper documentMapper;
 
@@ -67,7 +66,6 @@ public class DocumentServiceImpl implements DocumentService {
     public void updateDocument(List<DocumentUpdateDto> updateDtoList) {
         updateDtoList.forEach(updateDto -> {
             Long id = updateDto.getId();
-            ;
             Document document = documentRepository.findById(id)
                     .orElseThrow(() -> new DocumentNotFoundException(id.toString()));
             document = documentMapper.document(document, updateDto);
@@ -76,21 +74,18 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public Long addCenterDocument(Long id, DocumentCreateDto documentCreateDto, MultipartFile multipartFile) throws IOException {
-        Document document = documentMapper.centerDocument(id, documentCreateDto);
-        return saveFile(multipartFile, document);
+    public Long addCenterDocument(Long id, DocumentCreateDto documentCreateDto) {
+        return documentMapper.centerDocument(id, documentCreateDto).getId();
     }
 
     @Override
-    public Long addHeadquartersDocument(Long id, DocumentCreateDto documentCreateDto, MultipartFile multipartFile) throws IOException {
-        Document document = documentMapper.headquartersDocument(id, documentCreateDto);
-        return saveFile(multipartFile, document);
+    public Long addHeadquartersDocument(Long id, DocumentCreateDto documentCreateDto) {
+        return documentMapper.headquartersDocument(id, documentCreateDto).getId();
     }
 
     @Override
-    public Long addDistrictDocument(Long id, DocumentCreateDto documentCreateDto) throws IOException {
-        Document document = documentMapper.districtDocument(id, documentCreateDto);
-        return saveFile(documentCreateDto.getMultipartFile(), document);
+    public Long addDistrictDocument(Long id, DocumentCreateDto documentCreateDto) {
+        return documentMapper.districtDocument(id, documentCreateDto).getId();
     }
 
     @Override
@@ -107,12 +102,19 @@ public class DocumentServiceImpl implements DocumentService {
         return new FileInputStream(file);
     }
 
-    private Long saveFile(MultipartFile multipartFile, Document document) throws IOException {
+    @Override
+    public void saveFile(MultipartFile multipartFile, Long documentId) throws IOException {
+        saveFile(multipartFile, documentRepository.findById(documentId).orElseThrow(() ->
+                new EntityNotFoundException("Не существует документа с ID = ".concat(String.valueOf(documentId)))
+        ));
+    }
+
+    private void saveFile(MultipartFile multipartFile, Document document) throws IOException {
         Files.createDirectories(Paths.get(PATH_TO_MEDIA + "/document/"));
         File file = new File(PATH_TO_MEDIA + "/document/" + multipartFile.getOriginalFilename());
         multipartFile.transferTo(file);
         document.setFilePath(file.getAbsolutePath());
-        return documentRepository.saveAndFlush(document).getId();
+        documentRepository.saveAndFlush(document);
     }
 
     private Stream<Document> filterStream(Stream<Document> stream, DocumentFilter filter) {

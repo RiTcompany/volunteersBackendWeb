@@ -22,13 +22,15 @@ public interface DocumentService {
 
     void updateDocument(List<DocumentUpdateDto> updateDtoList);
 
-    Long addCenterDocument(Long id, DocumentCreateDto documentCreateDto, MultipartFile multipartFile) throws IOException;
+    Long addCenterDocument(Long id, DocumentCreateDto documentCreateDto) throws IOException;
 
-    Long addHeadquartersDocument(Long id, DocumentCreateDto documentCreateDto, MultipartFile multipartFile) throws IOException;
+    Long addHeadquartersDocument(Long id, DocumentCreateDto documentCreateDto) throws IOException;
 
     Long addDistrictDocument(Long id, DocumentCreateDto documentCreateDto) throws IOException;
 
     void delete(Long id);
 
     InputStream getFile(Long id) throws FileNotFoundException;
+
+    void saveFile(MultipartFile multipartFile, Long documentId) throws IOException;
 }

@@ -5,7 +5,6 @@ import org.example.pojo.dto.create.DocumentCreateDto;
 import org.example.pojo.dto.table.DocumentTableDto;
 import org.example.pojo.filters.DocumentFilter;
 import org.example.services.DocumentService;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,12 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
@@ -61,20 +56,18 @@ public class DocumentController {
 
     @PostMapping("/add_center_document/{id}")
     public ResponseEntity<Long> addCenterDocument(
-            @RequestParam("file") MultipartFile multipartFile,
             @PathVariable Long id,
             @RequestBody DocumentCreateDto documentCreateDto
     ) throws IOException {
-        return ResponseEntity.ok(documentService.addCenterDocument(id, documentCreateDto,multipartFile));
+        return ResponseEntity.ok(documentService.addCenterDocument(id, documentCreateDto));
     }
 
     @PostMapping("/add_headquarters_document/{id}")
     public ResponseEntity<Long> addHeadquartersDocument(
-            @RequestParam("file") MultipartFile multipartFile,
             @PathVariable Long id,
             @RequestBody DocumentCreateDto documentCreateDto
     ) throws IOException {
-        return ResponseEntity.ok(documentService.addHeadquartersDocument(id, documentCreateDto, multipartFile));
+        return ResponseEntity.ok(documentService.addHeadquartersDocument(id, documentCreateDto));
     }
 
     @PostMapping("/add_district_document/{id}")
@@ -96,5 +89,13 @@ public class DocumentController {
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType("application/pdf"))
                 .body(new InputStreamResource(documentService.getFile(id)));
+    }
+
+    @PostMapping("/save_document/{id}")
+    public HttpStatus saveDocument(
+            @PathVariable Long id, @RequestParam MultipartFile multipartFile
+    ) throws IOException {
+        documentService.saveFile(multipartFile, id);
+        return HttpStatus.ACCEPTED;
     }
 }
