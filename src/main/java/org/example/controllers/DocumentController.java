@@ -93,7 +93,7 @@ public class DocumentController {
 
     @PostMapping("/save_document/{id}")
     public HttpStatus saveDocument(
-            @PathVariable Long id, @RequestParam MultipartFile multipartFile
+            @PathVariable Long id, @RequestParam(name = "file") MultipartFile multipartFile
     ) throws IOException {
         documentService.saveFile(multipartFile, id);
         return HttpStatus.ACCEPTED;
