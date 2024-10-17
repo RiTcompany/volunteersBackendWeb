@@ -75,17 +75,17 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     public Long addCenterDocument(Long id, DocumentCreateDto documentCreateDto) {
-        return documentMapper.centerDocument(id, documentCreateDto).getId();
+        return documentRepository.saveAndFlush(documentMapper.centerDocument(id, documentCreateDto)).getId();
     }
 
     @Override
     public Long addHeadquartersDocument(Long id, DocumentCreateDto documentCreateDto) {
-        return documentMapper.headquartersDocument(id, documentCreateDto).getId();
+        return documentRepository.saveAndFlush(documentMapper.headquartersDocument(id, documentCreateDto)).getId();
     }
 
     @Override
     public Long addDistrictDocument(Long id, DocumentCreateDto documentCreateDto) {
-        return documentMapper.districtDocument(id, documentCreateDto).getId();
+        return documentRepository.saveAndFlush(documentMapper.districtDocument(id, documentCreateDto)).getId();
     }
 
     @Override
