@@ -14,7 +14,7 @@ public class QrCodeServiceImpl implements QrCodeService {
     @Override
     public byte[] generate(Long id) {
         try {
-            String url = "http://localhost:8082/volunteer/" + id + "/mark";
+            String url = "http://195.133.197.53:8082/volunteer/" + id + "/mark"; //TODO: убрать в проперти
 
             BitMatrix bitMatrix = new MultiFormatWriter().encode(url, BarcodeFormat.QR_CODE, 300, 300);
 
@@ -27,3 +27,7 @@ public class QrCodeServiceImpl implements QrCodeService {
         }
     }
 }
+
+
+
+//TODO: orElseThrow()
