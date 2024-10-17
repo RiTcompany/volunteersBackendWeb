@@ -12,11 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 public class QrCodeController {
+
     private final QrCodeService qrCodeService;
 
-    @GetMapping("/generateQR/{volunteerId}")
-    public ResponseEntity<byte[]> generateQRCode(@PathVariable Long volunteerId) {
-        byte[] qrCode = qrCodeService.generate(volunteerId);
+    @GetMapping("/generateQR/volunteer/{volunteerId}/event/{eventId}")
+    public ResponseEntity<byte[]> generateQRCode(@PathVariable Long volunteerId, @PathVariable Long eventId) {
+        byte[] qrCode = qrCodeService.generate(volunteerId,eventId);
         return qrCode != null ? ResponseEntity
                 .ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"qrcode.png\"")
