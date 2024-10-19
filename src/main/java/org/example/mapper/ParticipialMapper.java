@@ -34,7 +34,12 @@ public class ParticipialMapper {
         PersonalAccountDto dto = new PersonalAccountDto();
         dto.setVolunteerId(volunteer.getVolunteerId());
         dto.setFullName(volunteer.getFullName());
-        dto.setBirthdayDto(dateMapper.birthdayWithAge(volunteer.getBirthday()));
+        if (volunteer.getBirthday() == null) {
+            dto.setBirthdayDto(null);
+        } else {
+            dto.setBirthdayDto(dateMapper.birthdayWithAge(volunteer.getBirthday()));
+        }
+
         dto.setRank(volunteer.getRank());
         dto.setTgLink(volunteer.getTgLink());
         dto.setVkLink(volunteer.getVk());
@@ -50,7 +55,12 @@ public class ParticipialMapper {
         dto.setId(volunteer.getId());
         dto.setVolunteerId(volunteer.getVolunteerId());
         dto.setFullName(volunteer.getFullName());
-        dto.setBirthdayDto(dateMapper.birthdayWithAge(volunteer.getBirthday()));
+        if (volunteer.getBirthday() == null) {
+            dto.setBirthdayDto(null);
+        } else {
+            dto.setBirthdayDto(dateMapper.birthdayWithAge(volunteer.getBirthday()));
+        }
+
         dto.setTgLink(volunteer.getTgLink());
         dto.setVk(volunteer.getVk());
         dto.setColor(volunteer.getColor().getValue());
@@ -69,7 +79,12 @@ public class ParticipialMapper {
         dto.setId(volunteer.getId());
         dto.setVolunteerId(volunteer.getVolunteerId());
         dto.setFullName(volunteer.getFullName());
-        dto.setBirthdayDto(dateMapper.birthdayWithAge(volunteer.getBirthday()));
+        if (volunteer.getBirthday() == null) {
+            dto.setBirthdayDto(null);
+        } else {
+            dto.setBirthdayDto(dateMapper.birthdayWithAge(volunteer.getBirthday()));
+        }
+
         dto.setTgLink(volunteer.getTgLink());
         dto.setVkLink(volunteer.getVk());
         dto.setColor(volunteer.getColor().getValue());
@@ -82,7 +97,12 @@ public class ParticipialMapper {
         dto.setId(volunteer.getId());
         dto.setVolunteerId(volunteer.getVolunteerId());
         dto.setFullName(volunteer.getFullName());
-        dto.setBirthdayDto(dateMapper.birthdayWithAge(volunteer.getBirthday()));
+        if (volunteer.getBirthday() == null) {
+            dto.setBirthdayDto(null);
+        } else {
+            dto.setBirthdayDto(dateMapper.birthdayWithAge(volunteer.getBirthday()));
+        }
+
         dto.setTgLink(volunteer.getTgLink());
         dto.setFunctional(functionalRepository.findByEventIdAndParticipialId(eventId, volunteer.getId())
                 .map(Functional::getName).orElse(null)
@@ -99,7 +119,12 @@ public class ParticipialMapper {
         dto.setId(volunteer.getId());
         dto.setVolunteerId(volunteer.getVolunteerId());
         dto.setFullName(volunteer.getFullName());
-        dto.setBirthday(dateMapper.birthdayWithAge(volunteer.getBirthday()));
+        if (volunteer.getBirthday() == null) {
+            dto.setBirthday(null);
+        } else {
+            dto.setBirthday(dateMapper.birthdayWithAge(volunteer.getBirthday()));
+        }
+
         dto.setTgLink(volunteer.getTgLink());
         dto.setVkLink(volunteer.getVk());
         dto.setColor(volunteer.getColor().getValue());
@@ -115,7 +140,12 @@ public class ParticipialMapper {
         dto.setId(volunteer.getId());
         dto.setVolunteerId(volunteer.getVolunteerId());
         dto.setFullName(volunteer.getFullName());
-        dto.setBirthday(dateMapper.birthdayWithAge(volunteer.getBirthday()));
+        if (volunteer.getBirthday() == null) {
+            dto.setBirthday(null);
+        } else {
+            dto.setBirthday(dateMapper.birthdayWithAge(volunteer.getBirthday()));
+        }
+
         dto.setTgLink(volunteer.getTgLink());
         dto.setVkLink(volunteer.getVk());
         dto.setColor(volunteer.getColor().getValue());
