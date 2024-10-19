@@ -87,8 +87,7 @@ public class ParticipantController {
         return ResponseEntity.ok(participantService.getPersonalAccount(id));
     }
 
-    //TODO: Добавить логику пометки волонтера присутствующим и позволить переходить по ссылке только роли, которая за это в ответе
-    @GetMapping("/volunteer/{volunteerId}/{eventId}/mark")
+    @GetMapping("/volunteer/{volunteerId}/event/{eventId}/mark")
     public HttpStatus markVolunteerPresence(@PathVariable Long volunteerId, @PathVariable Long eventId) {
         volunteerEventService.markVolunteerPresence(volunteerId, eventId);
         return HttpStatus.ACCEPTED;

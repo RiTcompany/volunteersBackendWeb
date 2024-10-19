@@ -4,5 +4,5 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface QrCodeService {
-    byte[] generate(Long id);
+    byte[] generate(Long id, Long eventId);
 }
