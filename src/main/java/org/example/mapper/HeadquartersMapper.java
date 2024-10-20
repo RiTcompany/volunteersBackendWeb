@@ -50,8 +50,9 @@ public class HeadquartersMapper {
         dto.setRank(headquarters.getRank());
         dto.setCreateDate(headquarters.getCreateDate());
         dto.setParticipantLinkList(
-                volunteerRepository.findAllByHeadquartersId(headquarters.getId())
-                        .stream().map(linkMapper::participant).toList()
+                volunteerRepository.findAllByHeadquartersId(headquarters.getId()).stream()
+                        .filter(volunteer -> volunteer.getVolunteerId() != null)
+                        .map(linkMapper::participant).toList()
         );
 //        dto.setTgLinkList();
 //        dto.setVkLinkList();

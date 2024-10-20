@@ -50,8 +50,9 @@ public class CenterMapper {
         dto.setRank(center.getRank());
         dto.setCreateDate(center.getCreateDate());
         dto.setParticipantLinkList(
-                volunteerRepository.findAllByHeadquartersId(center.getId())
-                        .stream().map(linkMapper::participant).toList()
+                volunteerRepository.findAllByHeadquartersId(center.getId()).stream()
+                        .filter(volunteer -> volunteer.getVolunteerId() != null)
+                        .map(linkMapper::participant).toList()
         );
 //        dto.setTgLinkList();
 //        dto.setVkLinkList();

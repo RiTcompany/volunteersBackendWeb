@@ -36,7 +36,8 @@ public class ParticipantServiceImpl implements ParticipantService {
 
     @Override
     public List<VolunteerTableDto> getVolunteerList(ParticipantFilter filter) {
-        Stream<Volunteer> stream = volunteerRepository.findAll().stream();
+        Stream<Volunteer> stream = volunteerRepository.findAll().stream()
+                .filter(volunteer -> volunteer.getVolunteerId() != null);
 
         stream = filterByMinAge(stream, filter.getMinAge());
         stream = filterByMaxAge(stream, filter.getMaxAge());
@@ -74,7 +75,8 @@ public class ParticipantServiceImpl implements ParticipantService {
 
     @Override
     public List<DistrictParticipantTableDto> getDistrictParticipantList(Long districtTeamId, ParticipantFilter filter) {
-        Stream<Volunteer> stream = volunteerRepository.findAllByDistrictTeamId(districtTeamId).stream();
+        Stream<Volunteer> stream = volunteerRepository.findAllByDistrictTeamId(districtTeamId).stream()
+                .filter(volunteer -> volunteer.getVolunteerId() != null);
 
         stream = filterByMinAge(stream, filter.getMinAge());
         stream = filterByMaxAge(stream, filter.getMaxAge());
@@ -92,7 +94,8 @@ public class ParticipantServiceImpl implements ParticipantService {
         Event event = eventRepository.findById(eventId).orElseThrow(() ->
                 new EntityNotFoundException("Не существует Event ID = ".concat(String.valueOf(eventId)))
         );
-        Stream<Volunteer> stream = volunteerRepository.findAllByEventListContains(event).stream();
+        Stream<Volunteer> stream = volunteerRepository.findAllByEventListContains(event).stream()
+                .filter(volunteer -> volunteer.getVolunteerId() != null);
 
         stream = filterByMinAge(stream, filter.getMinAge());
         stream = filterByMaxAge(stream, filter.getMaxAge());
@@ -110,7 +113,8 @@ public class ParticipantServiceImpl implements ParticipantService {
 
     @Override
     public List<CenterParticipantTableDto> getCenterParticipantList(Long centerId, ParticipantFilter filter) {
-        Stream<Volunteer> stream = volunteerRepository.findAllByCenterId(centerId).stream();
+        Stream<Volunteer> stream = volunteerRepository.findAllByCenterId(centerId).stream()
+                .filter(volunteer -> volunteer.getVolunteerId() != null);
 
         stream = filterByMinAge(stream, filter.getMinAge());
         stream = filterByMaxAge(stream, filter.getMaxAge());
@@ -129,7 +133,8 @@ public class ParticipantServiceImpl implements ParticipantService {
 
     @Override
     public List<HeadquartersParticipantTableDto> getHeadquartersParticipantList(Long headquartersId, ParticipantFilter filter) {
-        Stream<Volunteer> stream = volunteerRepository.findAllByHeadquartersId(headquartersId).stream();
+        Stream<Volunteer> stream = volunteerRepository.findAllByHeadquartersId(headquartersId).stream()
+                .filter(volunteer -> volunteer.getVolunteerId() != null);
 
         stream = filterByMinAge(stream, filter.getMinAge());
         stream = filterByMaxAge(stream, filter.getMaxAge());
