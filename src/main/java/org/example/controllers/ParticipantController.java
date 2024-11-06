@@ -1,6 +1,9 @@
 package org.example.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.example.pojo.GetNamesResponse;
+import org.example.pojo.MarkEquipmentReturnedRequest;
+import org.example.pojo.PresenceMarkRequest;
 import org.example.pojo.dto.card.PersonalAccountDto;
 import org.example.pojo.dto.table.CenterParticipantTableDto;
 import org.example.pojo.dto.table.DistrictParticipantTableDto;
@@ -87,10 +90,21 @@ public class ParticipantController {
         return ResponseEntity.ok(participantService.getPersonalAccount(id));
     }
 
-    @GetMapping("/volunteer/{volunteerId}/event/{eventId}/mark")
-    public HttpStatus markVolunteerPresence(@PathVariable Long volunteerId, @PathVariable Long eventId) {
-        volunteerEventService.markVolunteerPresence(volunteerId, eventId);
+    @PatchMapping("/volunteer/{volunteerId}/event/{eventId}/mark")
+    public HttpStatus markVolunteerPresence(@PathVariable Long volunteerId, @PathVariable Long eventId, @RequestBody PresenceMarkRequest markRequest) {
+        volunteerEventService.markVolunteerPresence(volunteerId, eventId, markRequest);
         return HttpStatus.ACCEPTED;
+    }
+
+    @PatchMapping("/volunteer/{volunteerId}/return_equipment")
+    public HttpStatus markEquipmentReturned(@PathVariable Long volunteerId, @RequestBody MarkEquipmentReturnedRequest request) {
+        volunteerEventService.markEquipmentReturned(volunteerId, request);
+        return HttpStatus.ACCEPTED;
+    }
+
+    @GetMapping("/volunteer/{volunteerId}/event/{eventId}")
+    public ResponseEntity<GetNamesResponse> getEventNameAndVolunteerName(@PathVariable Long volunteerId, @PathVariable Long eventId) {
+        return ResponseEntity.ok(volunteerEventService.getEventNameAndVolunteerName(volunteerId, eventId));
     }
 
 }

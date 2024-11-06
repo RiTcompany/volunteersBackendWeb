@@ -26,4 +26,13 @@ public class VolunteerEvent {
 
     @Column(name = "is_here", columnDefinition="boolean default 'false'")
     private Boolean isHere;
+
+    @Column(name = "admin_id")
+    private Long adminId;
+
+    @Column(name = "equipment_id")
+    private Long equipmentId;
+
+    @Column(name = "has_equipment_returned", columnDefinition="boolean default 'false'")
+    private Boolean hasEquipmentReturned;
 }
