@@ -59,4 +59,10 @@ public class Event {
 
     @Column(name = "create_date")
     private Date createDate;
+
+    @Column(name = "training_link")
+    private String trainingLink;
+
+    @Column(name = "results_link")
+    private String resultsLink;
 }

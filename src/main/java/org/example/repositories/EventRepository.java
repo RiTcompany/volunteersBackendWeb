@@ -15,4 +15,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     @Query(value = "select e.name from Event as e where e.id = ?1")
     String findEventNameById(Long eventId);
+
+    @Query(value = "select e.resultsLink from Event as e where e.id = ?1")
+    String findEventResultsLinkById(Long eventId);
 }
