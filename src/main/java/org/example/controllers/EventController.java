@@ -77,4 +77,8 @@ public class EventController {
         return ResponseEntity.ok(result);
     }
 
+    @PatchMapping("/event/{id}")
+    public ResponseEntity<Long> setEventStatus(@PathVariable Long id, @RequestParam boolean status) {
+        return ResponseEntity.ok(eventService.setEventStatus(id, status));
+    }
 }

@@ -143,6 +143,13 @@ public class EventServiceImpl implements EventService {
         return false;
     }
 
+    @Override
+    public Long setEventStatus(Long id, boolean status) {
+        Event event = eventRepository.findById(id).orElseThrow(() -> new EventNotFoundException(id.toString()));
+        event.setIsAvailableForRegistration(status);
+        return eventRepository.save(event).getId();
+    }
+
     private String extractSpreadsheetId(String url) {
         Pattern pattern = Pattern.compile("/spreadsheets/d/([a-zA-Z0-9-_]+)");
         Matcher matcher = pattern.matcher(url);

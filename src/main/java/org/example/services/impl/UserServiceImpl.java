@@ -44,17 +44,4 @@ public class UserServiceImpl {
         return this::getByUsername;
     }
 
-    public User getCurrentUser() {
-        // Получение имени пользователя из контекста Spring Security
-        var username = SecurityContextHolder.getContext().getAuthentication().getName();
-        return getByUsername(username);
-    }
-
-
-    @Deprecated
-    public void getAdmin() {
-        var user = getCurrentUser();
-        user.setRole(ERole.ROLE_ADMIN);
-        save(user);
-    }
 }

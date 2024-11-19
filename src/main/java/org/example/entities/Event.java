@@ -65,4 +65,6 @@ public class Event {
 
     @Column(name = "results_link")
     private String resultsLink;
+
+    private Boolean isAvailableForRegistration = true;
 }

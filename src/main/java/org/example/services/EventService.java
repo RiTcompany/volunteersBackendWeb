@@ -32,4 +32,6 @@ public interface EventService {
     Event addResultsLink(Long eventId, String resultsLink);
 
     Boolean getResultByEmail(Long eventId, String email) throws GeneralSecurityException, IOException;
+
+    Long setEventStatus(Long id, boolean status);
 }

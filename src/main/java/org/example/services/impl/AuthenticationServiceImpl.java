@@ -29,7 +29,7 @@ public class AuthenticationServiceImpl implements org.example.services.Authentic
                 .username(request.getUsername())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request
-                        .getPassword())).role(ERole.ROLE_CLIENT)
+                        .getPassword())).role(null)
                 .build();
 
         userService.create(user);
