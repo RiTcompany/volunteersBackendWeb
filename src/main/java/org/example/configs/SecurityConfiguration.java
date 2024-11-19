@@ -19,6 +19,7 @@ import org.springframework.web.cors.CorsConfiguration;
 
 import java.util.List;
 
+import static org.example.enums.ERole.*;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration
@@ -41,6 +42,8 @@ public class SecurityConfiguration {
                     return corsConfiguration;
                 }))
                 .authorizeHttpRequests(request -> request
+                        .requestMatchers("/headquarters/**").hasAnyRole(REGIONAL_HEAD.name(), REGIONAL_TEAM_HEAD.name(), HEADQUARTER_CURATOR.name())
+                        .requestMatchers("/center/**").hasAnyRole(REGIONAL_HEAD.name(), REGIONAL_TEAM_HEAD.name(), UNIVERSITY_COMMUNITY_CENTER_CURATOR.name(), SCHOOL_SQUAD_CURATOR.name())
                         .anyRequest().permitAll())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider())
