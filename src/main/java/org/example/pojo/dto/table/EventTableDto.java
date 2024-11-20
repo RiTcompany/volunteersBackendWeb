@@ -15,4 +15,5 @@ public class EventTableDto {
     private String location;
     private String teamLeader;
     private String registrationLink;
+    private boolean isAvailableForRegistration;
 }

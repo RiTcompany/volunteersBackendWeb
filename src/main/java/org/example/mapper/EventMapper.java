@@ -27,6 +27,7 @@ public class EventMapper {
         dto.setLocation(event.getLocation());
         dto.setTeamLeader(event.getTeamLeader());
         dto.setRegistrationLink(event.getRegistrationLink());
+        dto.setAvailableForRegistration(event.getIsAvailableForRegistration() != null ? event.getIsAvailableForRegistration() : true);
         return dto;
     }
 
