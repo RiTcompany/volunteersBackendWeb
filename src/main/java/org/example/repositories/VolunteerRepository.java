@@ -28,4 +28,6 @@ public interface VolunteerRepository extends JpaRepository<Volunteer, Long> {
 
     @Query(value = "select v.fullName from Volunteer as v where v.id = ?1")
     String findVolunteerNameById(Long volunteerId);
+
+    Optional<Volunteer> findByEmail(String name);
 }

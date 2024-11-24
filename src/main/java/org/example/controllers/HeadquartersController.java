@@ -1,7 +1,6 @@
 package org.example.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.example.enums.ERole;
 import org.example.pojo.dto.card.HeadquartersCardDto;
 import org.example.pojo.dto.create.HeadquartersCreateDto;
 import org.example.pojo.dto.table.HeadquartersTableDto;
@@ -9,7 +8,6 @@ import org.example.pojo.dto.update.HeadquartersUpdateDto;
 import org.example.services.HeadquartersService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

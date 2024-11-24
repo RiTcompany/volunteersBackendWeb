@@ -1,10 +1,8 @@
 package org.example.services.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.example.entities.User;
-import org.example.enums.ERole;
+import org.example.entities.BotUser;
 import org.example.repositories.UserRepository;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -15,17 +13,12 @@ public class UserServiceImpl {
     private final UserRepository repository;
 
 
-    public User save(User user) {
+    public BotUser save(BotUser user) {
         return repository.save(user);
     }
 
 
-    public User create(User user) {
-        if (repository.existsByUsername(user.getUsername())) {
-            // Заменить на свои исключения
-            throw new RuntimeException("Пользователь с таким именем уже существует");
-        }
-
+    public BotUser create(BotUser user) {
         if (repository.existsByEmail(user.getEmail())) {
             throw new RuntimeException("Пользователь с таким email уже существует");
         }
@@ -34,7 +27,7 @@ public class UserServiceImpl {
     }
 
 
-    public User getByUsername(String username) {
+    public BotUser getByUsername(String username) {
         return repository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден"));
     }

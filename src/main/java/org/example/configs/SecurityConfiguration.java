@@ -1,6 +1,7 @@
 package org.example.configs;
 
 import lombok.RequiredArgsConstructor;
+import org.example.enums.ERole;
 import org.example.services.impl.UserServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -42,8 +43,10 @@ public class SecurityConfiguration {
                     return corsConfiguration;
                 }))
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/headquarters/**").hasAnyRole(REGIONAL_HEAD.name(), REGIONAL_TEAM_HEAD.name(), HEADQUARTER_CURATOR.name())
-                        .requestMatchers("/center/**").hasAnyRole(REGIONAL_HEAD.name(), REGIONAL_TEAM_HEAD.name(), UNIVERSITY_COMMUNITY_CENTER_CURATOR.name(), SCHOOL_SQUAD_CURATOR.name())
+                        .requestMatchers("/headquarters/**")
+                        .hasAnyRole(ROLE_REGIONAL_HEAD.getName(), ROLE_REGIONAL_TEAM_HEAD.getName(), ROLE_HEADQUARTER_CURATOR.getName())
+                        .requestMatchers("/center/**")
+                        .hasAnyRole(ROLE_REGIONAL_HEAD.getName(), ROLE_REGIONAL_TEAM_HEAD.getName(), ROLE_UNIVERSITY_COMMUNITY_CENTER_CURATOR.getName(), ROLE_SCHOOL_SQUAD_CURATOR.getName())
                         .anyRequest().permitAll())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider())
