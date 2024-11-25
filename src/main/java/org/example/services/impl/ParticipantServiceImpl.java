@@ -17,9 +17,11 @@ import org.example.pojo.dto.update.DistrictTeamParticipantUpdateDto;
 import org.example.pojo.dto.update.ParticipantUpdateDto;
 import org.example.pojo.filters.ParticipantFilter;
 import org.example.repositories.EventRepository;
+import org.example.repositories.UserRepository;
 import org.example.repositories.VolunteerRepository;
 import org.example.services.ParticipantService;
 import org.example.utils.DateUtil;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -33,6 +35,7 @@ public class ParticipantServiceImpl implements ParticipantService {
     private final VolunteerRepository volunteerRepository;
     private final ParticipialMapper participialMapper;
     private final EventRepository eventRepository;
+    private final UserRepository userRepository;
 
     @Override
     public List<VolunteerTableDto> getVolunteerList(ParticipantFilter filter) {
@@ -162,7 +165,8 @@ public class ParticipantServiceImpl implements ParticipantService {
 
     @Override
     public PersonalAccountDto getPersonalAccount(Long id) {
-        return volunteerRepository.findById(id).map(participialMapper::personalAccountDto)
+        var u = userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("Shit"));
+        return volunteerRepository.findByEmail(u.getEmail()).map(participialMapper::personalAccountDto)
                 .orElseThrow(() -> new VolunteerNotFoundException(id.toString()));
     }
 
