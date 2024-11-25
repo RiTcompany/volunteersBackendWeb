@@ -7,6 +7,9 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import org.example.entities.BotUser;
+import org.example.entities.Volunteer;
+import org.example.exceptions.VolunteerNotFoundException;
+import org.example.repositories.VolunteerRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -20,8 +23,13 @@ import java.util.function.Function;
 @Slf4j
 @Service
 public class JwtServiceImpl implements org.example.services.JwtService {
+    private final VolunteerRepository volunteerRepository;
     @Value("${token.signing.key}")
     private String jwtSigningKey;
+
+    public JwtServiceImpl(VolunteerRepository volunteerRepository) {
+        this.volunteerRepository = volunteerRepository;
+    }
 
 
     @Override
@@ -32,9 +40,11 @@ public class JwtServiceImpl implements org.example.services.JwtService {
 
     @Override
     public String generateToken(UserDetails userDetails) {
+        Volunteer volunteer = volunteerRepository.findByEmail(userDetails.getUsername())
+                .orElseThrow(() -> new VolunteerNotFoundException(userDetails.getUsername()));
         Map<String, Object> claims = new HashMap<>();
         if (userDetails instanceof BotUser customUserDetails) {
-            claims.put("id", customUserDetails.getId());
+            claims.put("id", volunteer.getId());
             claims.put("email", customUserDetails.getEmail());
         }
         return generateToken(claims, userDetails);
