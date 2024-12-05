@@ -46,32 +46,32 @@ public class CenterServiceImpl implements CenterService {
 
     @Override
     public long addCenter(CenterCreateDto centerCreateDto) {
-        BotUser botUser = userRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName())
+        /*BotUser botUser = userRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found by username: " + SecurityContextHolder.getContext().getAuthentication().getName()));
         if (botUser.getRoleList().stream()
                 .map(Role::getRoleName)
                 .noneMatch(role -> role == ERole.ROLE_REGIONAL_HEAD || role == ERole.ROLE_REGIONAL_TEAM_HEAD)) {
             throw new PermissionDeniedException();
-        }
+        }*/
         return centerRepository.saveAndFlush(centerMapper.center(centerCreateDto)).getId();
     }
 
     @Override
     public long deleteCenter(Long id) {
-        BotUser botUser = userRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName())
+        /*BotUser botUser = userRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found by username: " + SecurityContextHolder.getContext().getAuthentication().getName()));
         if (botUser.getRoleList().stream()
                 .map(Role::getRoleName)
                 .noneMatch(role -> role == ERole.ROLE_REGIONAL_HEAD || role == ERole.ROLE_REGIONAL_TEAM_HEAD)) {
             throw new PermissionDeniedException();
-        }
+        }*/
         centerRepository.deleteById(id);
         return id;
     }
 
     @Override
     public CenterCardDto getCenterCard(Long id) {
-        Volunteer volunteer = volunteerRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName())
+        /*Volunteer volunteer = volunteerRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found by username: " + SecurityContextHolder.getContext().getAuthentication().getName()));
         BotUser botUser = userRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found by username: " + SecurityContextHolder.getContext().getAuthentication().getName()));
@@ -79,20 +79,20 @@ public class CenterServiceImpl implements CenterService {
                 .map(Role::getRoleName)
                 .noneMatch(role -> role == ERole.ROLE_REGIONAL_HEAD || role == ERole.ROLE_REGIONAL_TEAM_HEAD) && !volunteer.getCenter().getId().equals(id)) {
             throw new PermissionDeniedException();
-        }
+        }*/
         return centerRepository.findById(id).map(centerMapper::centerCardDto)
                 .orElseThrow(() -> new CenterNotFoundException(id.toString()));
     }
 
     @Override
     public void update(List<CenterUpdateDto> dtoList) {
-        BotUser botUser = userRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName())
+       /* BotUser botUser = userRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found by username: " + SecurityContextHolder.getContext().getAuthentication().getName()));
         if (botUser.getRoleList().stream()
                 .map(Role::getRoleName)
                 .noneMatch(role -> role == ERole.ROLE_REGIONAL_HEAD || role == ERole.ROLE_REGIONAL_TEAM_HEAD)) {
             throw new PermissionDeniedException();
-        }
+        }*/
         dtoList.forEach(dto -> {
                     Center center = centerRepository.findById(dto.getId()).orElseThrow(() -> new CenterNotFoundException(dto.getId().toString()));
                     centerRepository.saveAndFlush(centerMapper.center(center, dto));

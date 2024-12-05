@@ -45,32 +45,32 @@ public class HeadquartersServiceImpl implements HeadquartersService {
 
     @Override
     public long addHeadquarters(HeadquartersCreateDto headquartersCreateDto) {
-        BotUser botUser = userRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName())
+        /*BotUser botUser = userRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found by username: " + SecurityContextHolder.getContext().getAuthentication().getName()));
         if (botUser.getRoleList().stream()
                 .map(Role::getRoleName)
                 .noneMatch(role -> role == ERole.ROLE_REGIONAL_HEAD || role == ERole.ROLE_REGIONAL_TEAM_HEAD)) {
             throw new PermissionDeniedException();
-        }
+        }*/
         return headquartersRepository.saveAndFlush(headquartersMapper.headquarters(headquartersCreateDto)).getId();
     }
 
     @Override
     public long deleteHeadquarters(Long id) {
-        BotUser botUser = userRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName())
+        /*BotUser botUser = userRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found by username: " + SecurityContextHolder.getContext().getAuthentication().getName()));
         if (botUser.getRoleList().stream()
                 .map(Role::getRoleName)
                 .noneMatch(role -> role == ERole.ROLE_REGIONAL_HEAD || role == ERole.ROLE_REGIONAL_TEAM_HEAD)) {
             throw new PermissionDeniedException();
-        }
+        }*/
         headquartersRepository.deleteById(id);
         return id;
     }
 
     @Override
     public HeadquartersCardDto getHeadquartersCard(Long id) {
-        Volunteer volunteer = volunteerRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName())
+        /*Volunteer volunteer = volunteerRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found by username: " + SecurityContextHolder.getContext().getAuthentication().getName()));
         BotUser botUser = userRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found by username: " + SecurityContextHolder.getContext().getAuthentication().getName()));
@@ -78,20 +78,20 @@ public class HeadquartersServiceImpl implements HeadquartersService {
                 .map(Role::getRoleName)
                 .noneMatch(role -> role == ERole.ROLE_REGIONAL_HEAD || role == ERole.ROLE_REGIONAL_TEAM_HEAD) && !volunteer.getHeadquarters().getId().equals(id)) {
             throw new PermissionDeniedException();
-        }
+        }*/
         return headquartersRepository.findById(id).map(headquartersMapper::headquartersCardDto)
                 .orElseThrow(() -> new HeadquartersNotFoundException(id.toString()));
     }
 
     @Override
     public void update(List<HeadquartersUpdateDto> dtoList) {
-        BotUser botUser = userRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName())
+        /*BotUser botUser = userRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found by username: " + SecurityContextHolder.getContext().getAuthentication().getName()));
         if (botUser.getRoleList().stream()
                 .map(Role::getRoleName)
                 .noneMatch(role -> role == ERole.ROLE_REGIONAL_HEAD || role == ERole.ROLE_REGIONAL_TEAM_HEAD)) {
             throw new PermissionDeniedException();
-        }
+        }*/
         dtoList.forEach(dto -> {
                     Headquarters headquarters = headquartersRepository.findById(dto.getId()).orElseThrow(() -> new HeadquartersNotFoundException(dto.getId().toString()));
                     headquartersRepository.saveAndFlush(headquartersMapper.headquarters(headquarters, dto));
