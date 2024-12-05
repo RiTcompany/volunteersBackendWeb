@@ -43,10 +43,10 @@ public class SecurityConfiguration {
                     return corsConfiguration;
                 }))
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/headquarters/**")
+                        /*.requestMatchers("/headquarters/**")
                         .hasAnyRole(ROLE_REGIONAL_HEAD.getName(), ROLE_REGIONAL_TEAM_HEAD.getName(), ROLE_HEADQUARTER_CURATOR.getName())
                         .requestMatchers("/center/**")
-                        .hasAnyRole(ROLE_REGIONAL_HEAD.getName(), ROLE_REGIONAL_TEAM_HEAD.getName(), ROLE_UNIVERSITY_COMMUNITY_CENTER_CURATOR.getName(), ROLE_SCHOOL_SQUAD_CURATOR.getName())
+                        .hasAnyRole(ROLE_REGIONAL_HEAD.getName(), ROLE_REGIONAL_TEAM_HEAD.getName(), ROLE_UNIVERSITY_COMMUNITY_CENTER_CURATOR.getName(), ROLE_SCHOOL_SQUAD_CURATOR.getName())*/
                         .anyRequest().permitAll())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider())
