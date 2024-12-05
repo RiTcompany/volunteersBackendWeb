@@ -85,6 +85,11 @@ public class ParticipantController {
         return HttpStatus.ACCEPTED;
     }
 
+    @GetMapping("/my_personal_account/{id}")
+    public ResponseEntity<PersonalAccountDto> getMyPersonalAccountCard(@PathVariable Long id) {
+        return ResponseEntity.ok(participantService.getMyPersonalAccount(id));
+    }
+
     @GetMapping("/personal_account/{id}")
     public ResponseEntity<PersonalAccountDto> getPersonalAccountCard(@PathVariable Long id) {
         return ResponseEntity.ok(participantService.getPersonalAccount(id));

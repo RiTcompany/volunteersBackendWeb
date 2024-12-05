@@ -32,4 +32,6 @@ public interface ParticipantService {
     void changeDistrictTeamForParticipant(DistrictTeamParticipantUpdateDto dto);
 
     PersonalAccountDto getPersonalAccount(Long id);
+
+    PersonalAccountDto getMyPersonalAccount(Long id);
 }

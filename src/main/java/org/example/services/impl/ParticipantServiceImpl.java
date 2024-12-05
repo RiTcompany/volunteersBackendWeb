@@ -164,9 +164,15 @@ public class ParticipantServiceImpl implements ParticipantService {
     }
 
     @Override
-    public PersonalAccountDto getPersonalAccount(Long id) {
+    public PersonalAccountDto getMyPersonalAccount(Long id) {
         var u = userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("Shit"));
         return volunteerRepository.findByEmail(u.getEmail()).map(participialMapper::personalAccountDto)
+                .orElseThrow(() -> new VolunteerNotFoundException(id.toString()));
+    }
+
+    @Override
+    public PersonalAccountDto getPersonalAccount(Long id) {
+        return volunteerRepository.findById(id).map(participialMapper::personalAccountDto)
                 .orElseThrow(() -> new VolunteerNotFoundException(id.toString()));
     }
 
