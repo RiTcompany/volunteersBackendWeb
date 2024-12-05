@@ -133,13 +133,12 @@ public class EventServiceImpl implements EventService {
         for (List<Object> row : values) {
             if (row.size() > 0 && row.get(0).toString().equalsIgnoreCase(email)) {
                 if (row.size() > 1 && areNumbersEqual(row.get(1).toString())) {
-                    return false;
+                    return true;
                 }
             }
         }
 
 
-        System.out.println("Email not found in the sheet.");
         return false;
     }
 
