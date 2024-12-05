@@ -33,13 +33,13 @@ public class HeadquartersServiceImpl implements HeadquartersService {
 
     @Override
     public List<HeadquartersTableDto> getHeadquartersList() {
-        BotUser botUser = userRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName())
+        /*BotUser botUser = userRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found by username: " + SecurityContextHolder.getContext().getAuthentication().getName()));
         if (botUser.getRoleList().stream()
                 .map(Role::getRoleName)
                 .noneMatch(role -> role == ERole.ROLE_REGIONAL_HEAD || role == ERole.ROLE_REGIONAL_TEAM_HEAD)) {
             throw new PermissionDeniedException();
-        }
+        }*/
         return headquartersRepository.findAll().stream().map(headquartersMapper::headquartersDto).toList();
     }
 

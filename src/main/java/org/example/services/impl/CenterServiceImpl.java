@@ -34,13 +34,13 @@ public class CenterServiceImpl implements CenterService {
 
     @Override
     public List<CenterTableDto> getCenterList() {
-        BotUser botUser = userRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName())
+        /*BotUser botUser = userRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found by username: " + SecurityContextHolder.getContext().getAuthentication().getName()));
         if (botUser.getRoleList().stream()
                 .map(Role::getRoleName)
                 .noneMatch(role -> role == ERole.ROLE_REGIONAL_HEAD || role == ERole.ROLE_REGIONAL_TEAM_HEAD)) {
             throw new PermissionDeniedException();
-        }
+        }*/
         return centerRepository.findAll().stream().map(centerMapper::centerDto).toList();
     }
 
