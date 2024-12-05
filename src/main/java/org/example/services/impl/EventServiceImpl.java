@@ -97,7 +97,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public Boolean getResultByEmail(Long eventId, String email) throws GeneralSecurityException, IOException {
+    public Boolean getResultByEmail(Long eventId, String email) throws IOException {
         String spreadsheetUrl = eventRepository.findEventResultsLinkById(eventId);
 
         String spreadsheetId = extractSpreadsheetId(spreadsheetUrl);
@@ -118,7 +118,7 @@ public class EventServiceImpl implements EventService {
         int responseCode = connection.getResponseCode();
         if (responseCode != HttpURLConnection.HTTP_OK) {
             System.out.println("Failed to retrieve data. Response code: " + responseCode);
-            return null;
+            return false;
         }
 
         InputStreamReader reader = new InputStreamReader(connection.getInputStream());
@@ -127,13 +127,13 @@ public class EventServiceImpl implements EventService {
 
         if (values == null || values.isEmpty()) {
             System.out.println("No data found.");
-            return null;
+            return false;
         }
 
         for (List<Object> row : values) {
             if (row.size() > 0 && row.get(0).toString().equalsIgnoreCase(email)) {
                 if (row.size() > 1 && areNumbersEqual(row.get(1).toString())) {
-                    return true;
+                    return false;
                 }
             }
         }
