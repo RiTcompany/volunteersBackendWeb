@@ -95,7 +95,7 @@ public class DocumentController {
 
 
     @PatchMapping("/document/{id}")
-    public HttpStatus deleteDocument(@PathVariable Long id, Long docNumber) {
+    public HttpStatus addNumberToDocument(@PathVariable Long id, Long docNumber) {
         documentService.addDocNumber(id, docNumber);
         return HttpStatus.ACCEPTED;
     }
