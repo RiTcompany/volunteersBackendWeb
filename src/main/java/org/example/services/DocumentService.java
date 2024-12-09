@@ -30,6 +30,8 @@ public interface DocumentService {
 
     void delete(Long id);
 
+    Long addDocNumber(Long id, Long number);
+
     InputStream getFile(Long id) throws FileNotFoundException;
 
     void saveFile(MultipartFile multipartFile, Long documentId) throws IOException;

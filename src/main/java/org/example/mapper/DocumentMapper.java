@@ -13,6 +13,7 @@ public class DocumentMapper {
         dto.setId(document.getId());
         dto.setName(document.getName());
         dto.setSender(document.getSender());
+        dto.setDocNumber(document.getDocNumber());
         dto.setRecipient(document.getRecipient());
         dto.setCreateDate(document.getCreateDate());
         dto.setApprovalControl(document.isApprovalControl());
@@ -49,6 +50,7 @@ public class DocumentMapper {
         Document document = new Document();
         document.setName(dto.getName());
         document.setSender(dto.getSender());
+        document.setDocNumber(document.getDocNumber());
         document.setRecipient(dto.getRecipient());
         document.setCreateDate(dto.getCreateDate());
         document.setApprovalControl(dto.isApprovalControl());

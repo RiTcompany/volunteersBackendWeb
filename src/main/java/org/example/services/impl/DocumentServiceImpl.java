@@ -94,6 +94,13 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
+    public Long addDocNumber(Long id, Long number) {
+        Document document = documentRepository.findById(id).orElseThrow(() -> new DocumentNotFoundException(id.toString()));
+        document.setDocNumber(number);
+        return documentRepository.save(document).getId();
+    }
+
+    @Override
     public InputStream getFile(Long id) throws FileNotFoundException {
         Document document = documentRepository.findById(id).orElseThrow(() ->
                 new EntityNotFoundException("Не существует документа ID = ".concat(String.valueOf(id)))

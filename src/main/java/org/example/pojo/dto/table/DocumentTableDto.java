@@ -13,5 +13,6 @@ public class DocumentTableDto {
     private String sender;
     private String recipient;
     private Date createDate;
+    private Long docNumber;
     private boolean approvalControl;
 }

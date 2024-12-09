@@ -26,6 +26,8 @@ public class Document {
 
     private String recipient;
 
+    private Long docNumber;
+
     @Column(name = "create_date")
     private Date createDate;
 
