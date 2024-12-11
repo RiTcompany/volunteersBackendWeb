@@ -50,7 +50,7 @@ public class DocumentMapper {
         Document document = new Document();
         document.setName(dto.getName());
         document.setSender(dto.getSender());
-        document.setDocNumber(document.getDocNumber());
+        document.setDocNumber(dto.getNumber());
         document.setRecipient(dto.getRecipient());
         document.setCreateDate(dto.getCreateDate());
         document.setApprovalControl(dto.isApprovalControl());
