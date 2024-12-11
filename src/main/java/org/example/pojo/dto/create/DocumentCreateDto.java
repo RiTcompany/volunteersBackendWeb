@@ -11,6 +11,7 @@ public class DocumentCreateDto {
     private String name;
     private String sender;
     private String recipient;
+    private Long number;
     private Date createDate;
     private boolean approvalControl;
 }
