@@ -31,7 +31,7 @@ public class VolunteerEventServiceImpl implements VolunteerEventService {
         if (markRequest.getEquipmentId() != null) {
             volunteerEvent.setAdminId(markRequest.getAdminId());
             volunteerEvent.setEquipmentId(markRequest.getEquipmentId());
-            volunteerEvent.setHasEquipmentReturned(false);
+            volunteerEvent.setHasEquipmentReturned(true);
         }
         volunteerEventRepository.saveAndFlush(volunteerEvent);
     }
@@ -43,7 +43,7 @@ public class VolunteerEventServiceImpl implements VolunteerEventService {
                         "Не существует пары волонтер ID = %d и мероприятие ID = %s".formatted(volunteerId, request.getEventId())
                 ));
         if (volunteerEvent.getAdminId().equals(request.getAdminId()) && volunteerEvent.getEquipmentId().equals(request.getEquipmentId())) {
-            volunteerEvent.setHasEquipmentReturned(true);
+            volunteerEvent.setHasEquipmentReturned(false);
         } else {
             throw new VolunteerEquipmentNotFoundException(volunteerId, request.getEquipmentId(), request.getAdminId());
         }
