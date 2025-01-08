@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.example.entities.Event;
 import org.example.entities.Volunteer;
+import org.example.entities.VolunteerEvent;
 import org.example.enums.EColor;
 import org.example.exceptions.VolunteerNotFoundException;
 import org.example.mapper.ParticipialMapper;
@@ -18,6 +19,7 @@ import org.example.pojo.dto.update.ParticipantUpdateDto;
 import org.example.pojo.filters.ParticipantFilter;
 import org.example.repositories.EventRepository;
 import org.example.repositories.UserRepository;
+import org.example.repositories.VolunteerEventRepository;
 import org.example.repositories.VolunteerRepository;
 import org.example.services.ParticipantService;
 import org.example.utils.DateUtil;
@@ -26,6 +28,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -36,6 +40,7 @@ public class ParticipantServiceImpl implements ParticipantService {
     private final ParticipialMapper participialMapper;
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
+    private final VolunteerEventRepository volunteerEventRepository;
 
     @Override
     public List<VolunteerTableDto> getVolunteerList(ParticipantFilter filter) {
@@ -98,12 +103,16 @@ public class ParticipantServiceImpl implements ParticipantService {
                 new EntityNotFoundException("Не существует Event ID = ".concat(String.valueOf(eventId)))
         );
         Stream<Volunteer> stream = volunteerRepository.findAllByEventListContains(event).stream()
-                .filter(volunteer -> volunteer.getVolunteerId() != null);
+                .filter(volunteer -> volunteer.getVolunteerId() != null)
+                .filter(volunteer -> {
+                    Optional<VolunteerEvent> volunteerEventOpt =
+                            volunteerEventRepository.findByVolunteerIdAndEventId(volunteer.getId(), eventId);
+                    return volunteerEventOpt.isPresent() && Objects.equals(volunteerEventOpt.get().getIsHere(), true);
+                });
 
         stream = filterByMinAge(stream, filter.getMinAge());
         stream = filterByMaxAge(stream, filter.getMaxAge());
         stream = filterByMinRank(stream, filter.getMinRank());
-//        TODO : filter by functional
         stream = filterByTesting(stream, filter.getTesting());
         stream = filterByClothes(stream, filter.getHasClothes());
 
