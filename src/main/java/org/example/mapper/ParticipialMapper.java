@@ -92,7 +92,7 @@ public class ParticipialMapper {
         return dto;
     }
 
-    public EventParticipantTableDto eventParticipantDto(Volunteer volunteer, long eventId) {
+    public EventParticipantTableDto eventParticipantDto(Volunteer volunteer, long eventId, boolean hasClothes) {
         EventParticipantTableDto dto = new EventParticipantTableDto();
         dto.setId(volunteer.getId());
         dto.setVolunteerId(volunteer.getVolunteerId());
@@ -110,7 +110,7 @@ public class ParticipialMapper {
         dto.setTesting(volunteer.isTesting());
         dto.setComment(volunteer.getComment());
         dto.setRank(volunteer.getRank());
-        dto.setHasClothes(volunteer.getHasAnorak()); // TODO : так ли понял
+        dto.setHasClothes(hasClothes);
         return dto;
     }
 
