@@ -7,7 +7,9 @@ import org.example.entities.Volunteer;
 import org.example.entities.VolunteerEvent;
 import org.example.enums.EColor;
 import org.example.exceptions.VolunteerNotFoundException;
+import org.example.mapper.LinkMapper;
 import org.example.mapper.ParticipialMapper;
+import org.example.pojo.dto.BirthdayDto;
 import org.example.pojo.dto.card.PersonalAccountDto;
 import org.example.pojo.dto.table.CenterParticipantTableDto;
 import org.example.pojo.dto.table.DistrictParticipantTableDto;
@@ -41,6 +43,7 @@ public class ParticipantServiceImpl implements ParticipantService {
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
     private final VolunteerEventRepository volunteerEventRepository;
+    private final LinkMapper linkMapper;
 
     @Override
     public List<VolunteerTableDto> getVolunteerList(ParticipantFilter filter) {
@@ -175,8 +178,19 @@ public class ParticipantServiceImpl implements ParticipantService {
     @Override
     public PersonalAccountDto getMyPersonalAccount(Long id) {
         var u = userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("Shit"));
-        return volunteerRepository.findByEmail(u.getEmail()).map(participialMapper::personalAccountDto)
-                .orElseThrow(() -> new VolunteerNotFoundException(id.toString()));
+        var v = volunteerRepository.findByEmail(u.getEmail()).orElseThrow(() -> new VolunteerNotFoundException(id.toString()));
+        return PersonalAccountDto.builder()
+                .volunteerId(v.getVolunteerId())
+                .fullName(v.getFullName())
+                .birthdayDto(BirthdayDto.builder().birthday(v.getBirthday()).age(DateUtil.age(v.getBirthday())).build())
+                .tgLink(v.getTgLink())
+                .vkLink(v.getVk())
+                .rank(v.getRank())
+                .eventLinkList(v.getEventList().stream().map(linkMapper::event).toList())
+                .centerLink(linkMapper.center(v.getCenter()))
+                .headquartersLink(linkMapper.headquarters(v.getHeadquarters()))
+                .districtTeamId(v.getDistrictTeamId())
+                .build();
     }
 
     @Override
