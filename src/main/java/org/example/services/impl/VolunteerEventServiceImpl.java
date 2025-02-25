@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.example.entities.VolunteerEvent;
 import org.example.enums.ERole;
+import org.example.exceptions.EventNotFoundException;
 import org.example.exceptions.PermissionDeniedException;
 import org.example.exceptions.VolunteerEquipmentNotFoundException;
 import org.example.exceptions.VolunteerNotFoundException;
@@ -32,7 +33,10 @@ public class VolunteerEventServiceImpl implements VolunteerEventService {
                 .orElseThrow(() -> new VolunteerNotFoundException("Volunteer not found"));
         var user = userRepository.findByEmail(volunteer.getEmail())
                 .orElseThrow(() -> new VolunteerNotFoundException("User not found"));
+        var event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new EventNotFoundException("Event not found"));
         if (user.getRoleList().isEmpty()) throw new PermissionDeniedException();
+        if (!event.getTeamLeader().equals(volunteer.getFullName())) throw new PermissionDeniedException();
         VolunteerEvent volunteerEvent = volunteerEventRepository.findByVolunteerIdAndEventId(volunteerId, eventId)
                 .orElseThrow(() -> new EntityNotFoundException(
                         "Не существует пары волонтер ID = %d и мероприятие ID = %s".formatted(volunteerId, eventId)
