@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.entities.Event;
 import org.example.entities.Functional;
 import org.example.entities.Volunteer;
+import org.example.entities.VolunteerEvent;
 import org.example.exceptions.CenterNotFoundException;
 import org.example.exceptions.HeadquartersNotFoundException;
 import org.example.pojo.dto.LinkDto;
@@ -17,9 +18,13 @@ import org.example.pojo.dto.update.ParticipantUpdateDto;
 import org.example.repositories.CenterRepository;
 import org.example.repositories.FunctionalRepository;
 import org.example.repositories.HeadquartersRepository;
+import org.example.repositories.VolunteerEventRepository;
+import org.example.services.VolunteerEventService;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -29,6 +34,7 @@ public class ParticipialMapper {
     private final CenterRepository centerRepository;
     private final HeadquartersRepository headquartersRepository;
     private final FunctionalRepository functionalRepository;
+    private final VolunteerEventRepository volunteerEventRepository;
 
     public PersonalAccountDto personalAccountDto(Volunteer volunteer) {
         PersonalAccountDto dto = new PersonalAccountDto();
@@ -64,7 +70,7 @@ public class ParticipialMapper {
         dto.setTgLink(volunteer.getTgLink());
         dto.setVk(volunteer.getVk());
         dto.setColor(volunteer.getColor().getValue());
-        dto.setEventLinkList(eventLinkList(volunteer.getEventList()));
+        dto.setEventLinkList(eventLinkList(volunteer));
         dto.setComment(volunteer.getComment());
         dto.setRank(volunteer.getRank());
         dto.setHasInterview(volunteer.isHasInterview());
@@ -88,7 +94,7 @@ public class ParticipialMapper {
         dto.setTgLink(volunteer.getTgLink());
         dto.setVkLink(volunteer.getVk());
         dto.setColor(volunteer.getColor().getValue());
-        dto.setEventLinkList(eventLinkList(volunteer.getEventList()));
+        dto.setEventLinkList(eventLinkList(volunteer));
         return dto;
     }
 
@@ -216,7 +222,14 @@ public class ParticipialMapper {
         return volunteer;
     }
 
-    private List<LinkDto> eventLinkList(List<Event> eventList) {
-        return eventList.stream().map(linkMapper::event).toList();
+    private List<LinkDto> eventLinkList(Volunteer volunteer) {
+        return volunteer.getEventList().stream()
+                .filter(event -> {
+                    Optional<VolunteerEvent> volunteerEvent = volunteerEventRepository
+                            .findByVolunteerIdAndEventId(volunteer.getId(), event.getId());
+                    return volunteerEvent.isPresent() && Objects.equals(volunteerEvent.get().getIsHere(), true);
+                })
+                .map(linkMapper::event)
+                .toList();
     }
 }
