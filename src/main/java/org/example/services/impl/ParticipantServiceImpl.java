@@ -7,7 +7,9 @@ import org.example.entities.Volunteer;
 import org.example.entities.VolunteerEvent;
 import org.example.enums.EColor;
 import org.example.exceptions.VolunteerNotFoundException;
+import org.example.mapper.LinkMapper;
 import org.example.mapper.ParticipialMapper;
+import org.example.pojo.dto.BirthdayDto;
 import org.example.pojo.dto.card.PersonalAccountDto;
 import org.example.pojo.dto.table.CenterParticipantTableDto;
 import org.example.pojo.dto.table.DistrictParticipantTableDto;
@@ -26,10 +28,7 @@ import org.example.utils.DateUtil;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -41,6 +40,7 @@ public class ParticipantServiceImpl implements ParticipantService {
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
     private final VolunteerEventRepository volunteerEventRepository;
+    private final LinkMapper linkMapper;
 
     @Override
     public List<VolunteerTableDto> getVolunteerList(ParticipantFilter filter) {
@@ -119,7 +119,7 @@ public class ParticipantServiceImpl implements ParticipantService {
         stream = sortByRank(stream, filter);
         stream = sortByDate(stream, filter);
 
-        return stream.map(volunteer -> participialMapper.eventParticipantDto(volunteer, eventId))
+        return stream.map(volunteer -> participialMapper.eventParticipantDto(volunteer, eventId, volunteerEventRepository.findByVolunteerIdAndEventId(volunteer.getId(), eventId).get().getHasEquipmentReturned()))
                 .toList();
     }
 
@@ -175,8 +175,19 @@ public class ParticipantServiceImpl implements ParticipantService {
     @Override
     public PersonalAccountDto getMyPersonalAccount(Long id) {
         var u = userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("Shit"));
-        return volunteerRepository.findByEmail(u.getEmail()).map(participialMapper::personalAccountDto)
-                .orElseThrow(() -> new VolunteerNotFoundException(id.toString()));
+        var v = volunteerRepository.findByEmail(u.getEmail()).orElseThrow(() -> new VolunteerNotFoundException(id.toString()));
+        return PersonalAccountDto.builder()
+                .volunteerId(v.getVolunteerId())
+                .fullName(v.getFullName())
+                .birthdayDto(BirthdayDto.builder().birthday(v.getBirthday()).age(DateUtil.age(v.getBirthday())).build())
+                .tgLink(v.getTgLink())
+                .vkLink(v.getVk())
+                .rank(v.getRank())
+                .eventLinkList(v.getEventList().stream().map(linkMapper::event).toList())
+                .centerLink(linkMapper.center(v.getCenter()))
+                .headquartersLink(linkMapper.headquarters(v.getHeadquarters()))
+                .districtTeamId(v.getDistrictTeamId())
+                .build();
     }
 
     @Override

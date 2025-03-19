@@ -1,12 +1,14 @@
 package org.example.pojo.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class BirthdayDto {
     private Date birthday;
     private Integer age;
